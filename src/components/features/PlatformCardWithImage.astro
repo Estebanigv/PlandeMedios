@@ -1,0 +1,286 @@
+---
+/**
+ * Platform Card with Background Image
+ * Displays platform cards with background images and overlays
+ */
+interface Props {
+  title: string;
+  subtitle: string;
+  badge: string;
+  imageSrc: string;
+  imageAlt: string;
+  size?: 'large' | 'medium';
+  platform?: 'graphic' | 'motor' | 'innovation';
+}
+
+const {
+  title,
+  subtitle,
+  badge,
+  imageSrc,
+  imageAlt,
+  size = 'medium',
+  platform = 'graphic'
+} = Astro.props;
+---
+
+<div class={`platform-card platform-card-${size} platform-${platform}`}>
+  <!-- Glow effect -->
+  <div class="card-glow"></div>
+  <div class="card-hover-glow"></div>
+
+  <div class="platform-card-background">
+    <img src={imageSrc} alt={imageAlt} loading="lazy" />
+    <div class={`platform-card-overlay overlay-${platform}`}></div>
+  </div>
+
+  <div class="platform-card-content">
+    <!-- Decorative floating elements -->
+    <div class="floating-orb floating-orb-1"></div>
+    <div class="floating-orb floating-orb-2"></div>
+
+    <span class="platform-badge">
+      <span class="badge-text">{badge}</span>
+    </span>
+
+    <h3 class="platform-title">{title}</h3>
+    <p class="platform-subtitle">{subtitle}</p>
+  </div>
+</div>
+
+<style>
+  .platform-card {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+  }
+
+  /* Static glow behind card */
+  .card-glow {
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(to bottom right, rgba(20, 184, 166, 0.2), rgba(16, 185, 129, 0.2));
+    border-radius: 1.5rem;
+    filter: blur(48px);
+    opacity: 0.5;
+    z-index: -1;
+    transform: scale(1.1);
+    pointer-events: none;
+  }
+
+  /* Hover glow effect */
+  .card-hover-glow {
+    position: absolute;
+    inset: -4px;
+    background: linear-gradient(to bottom right, rgba(20, 184, 166, 0.2), rgba(16, 185, 129, 0.2));
+    border-radius: 1.75rem;
+    filter: blur(40px);
+    opacity: 0;
+    z-index: -2;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  /* Floating decorative orbs */
+  .floating-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(32px);
+    animation: float-orb 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .floating-orb-1 {
+    width: 128px;
+    height: 128px;
+    background: linear-gradient(to bottom right, rgba(20, 184, 166, 0.2), rgba(16, 185, 129, 0.2));
+    top: -40px;
+    right: -40px;
+    animation-delay: 0s;
+  }
+
+  .floating-orb-2 {
+    width: 160px;
+    height: 160px;
+    background: linear-gradient(to top right, rgba(59, 130, 246, 0.1), rgba(20, 184, 166, 0.1));
+    bottom: -40px;
+    left: -40px;
+    animation-delay: 1s;
+  }
+
+  @keyframes float-orb {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(10px, -10px) scale(1.1);
+    }
+  }
+
+  .platform-card-large {
+    min-height: 420px;
+    grid-column: 1 / -1;
+  }
+
+  .platform-card-medium {
+    min-height: 320px;
+  }
+
+  .platform-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(20, 184, 166, 0.3);
+    box-shadow: 0 20px 40px rgba(20, 184, 166, 0.15);
+  }
+
+  .platform-card:hover .card-hover-glow {
+    opacity: 1;
+  }
+
+  .platform-card:hover .platform-card-background img {
+    transform: scale(1.05);
+  }
+
+  .platform-card-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .platform-card-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .platform-card-overlay {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(2px);
+  }
+
+  /* Overlay gradients específicos por plataforma */
+  .overlay-graphic {
+    background: linear-gradient(
+      to bottom,
+      rgba(19, 78, 74, 0.95) 0%,
+      rgba(17, 94, 89, 0.5) 50%,
+      transparent 100%
+    );
+  }
+
+  .overlay-motor {
+    background: linear-gradient(
+      to bottom,
+      rgba(2, 6, 23, 0.9) 0%,
+      rgba(15, 23, 42, 0.4) 50%,
+      transparent 100%
+    );
+  }
+
+  .overlay-innovation {
+    background: linear-gradient(
+      to bottom,
+      rgba(6, 78, 59, 0.9) 0%,
+      rgba(6, 95, 70, 0.4) 50%,
+      transparent 100%
+    );
+  }
+
+  .platform-card-content {
+    position: relative;
+    z-index: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+  }
+
+  .platform-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(to right, rgba(20, 184, 166, 0.1), rgba(16, 185, 129, 0.1));
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    border-radius: 9999px;
+    margin-bottom: 1rem;
+    width: fit-content;
+    backdrop-filter: blur(8px);
+  }
+
+  .badge-text {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #2dd4bf;
+  }
+
+  .platform-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+    color: var(--color-text);
+    letter-spacing: -0.025em;
+  }
+
+  .platform-card-large .platform-title {
+    font-size: 2.75rem;
+  }
+
+  .platform-subtitle {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    max-width: 90%;
+  }
+
+  @media (max-width: 1024px) {
+    .platform-card-large {
+      min-height: 360px;
+    }
+
+    .platform-card-medium {
+      min-height: 280px;
+    }
+
+    .platform-title {
+      font-size: 1.875rem;
+    }
+
+    .platform-card-large .platform-title {
+      font-size: 2.25rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .platform-card-large,
+    .platform-card-medium {
+      min-height: 320px;
+    }
+
+    .platform-card-content {
+      padding: 1.5rem;
+    }
+
+    .platform-title {
+      font-size: 1.5rem;
+    }
+
+    .platform-card-large .platform-title {
+      font-size: 1.875rem;
+    }
+
+    .platform-subtitle {
+      font-size: 0.875rem;
+      max-width: 100%;
+    }
+  }
+</style>

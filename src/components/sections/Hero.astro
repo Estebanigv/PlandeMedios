@@ -1,0 +1,557 @@
+---
+import { siteConfig } from '@/data/site';
+import PlatformCardWithImage from '@/components/features/PlatformCardWithImage.astro';
+---
+
+<section id="inicio" class="hero">
+  <div class="hero-background">
+    <div class="gradient-blur gradient-blur-1"></div>
+    <div class="gradient-blur gradient-blur-2"></div>
+    <div class="gradient-blur gradient-blur-3"></div>
+  </div>
+
+  <div class="container-custom">
+    <div class="hero-grid">
+      <!-- Left Column: Content (40%) -->
+      <div class="hero-content">
+        <div class="badge-wrapper">
+          <svg class="sparkle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="badge-text">AGENCIA DE CONTENIDOS Y PLANIFICACIÓN DE MEDIOS</span>
+        </div>
+
+        <h1 class="hero-title">
+          Contenido y medios que <span class="gradient-text">conectan marcas</span> con audiencias reales
+        </h1>
+
+        <p class="hero-description">
+          Estrategia integral de contenido y planificación de medios. Creamos, producimos y distribuimos contenido que genera resultados medibles para tu marca.
+        </p>
+
+        <!-- Feature Bullets -->
+        <div class="hero-features">
+          <div class="feature-item">
+            <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Planificación de medios + generación de contenido</span>
+          </div>
+          <div class="feature-item">
+            <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Plataformas especializadas: Tour Graphic, Tour Motor, Tour Innovación</span>
+          </div>
+          <div class="feature-item">
+            <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="17 6 23 6 23 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Estrategia, producción y distribución en un solo equipo</span>
+          </div>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="hero-buttons">
+          <a href="#contacto" class="btn btn-primary">
+            Agendar una reunión
+          </a>
+          <a href="#servicios" class="btn btn-secondary">
+            <span>Ver plataformas de contenido</span>
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-value">+10 años</span>
+            <span class="stat-label">de experiencia en medios</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-value">Clientes en sectores</span>
+            <span class="stat-label">automotriz, tech y retail</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Platform Cards (60%) -->
+      <div class="hero-visual">
+        <div class="platforms-grid">
+          <PlatformCardWithImage
+            size="large"
+            platform="graphic"
+            badge="TOUR GRAPHIC"
+            title="Tour Graphic"
+            subtitle="Contenido visual y estrategias para pantallas LED, vallas y medios urbanos de alto impacto"
+            imageSrc="https://images.unsplash.com/photo-1551818255-e6e10975bc17?w=800&h=600&fit=crop&q=80"
+            imageAlt="Pantalla LED urbana con contenido publicitario"
+          />
+
+          <PlatformCardWithImage
+            size="medium"
+            platform="motor"
+            badge="TOUR MOTOR"
+            title="Tour Motor"
+            subtitle="Especialistas en marketing automotriz y contenido para el sector"
+            imageSrc="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&h=450&fit=crop&q=80"
+            imageAlt="Vehículo moderno en showroom"
+          />
+
+          <PlatformCardWithImage
+            size="medium"
+            platform="innovation"
+            badge="TOUR INNOVACIÓN"
+            title="Tour Innovación"
+            subtitle="Contenido tech, startups y empresas de innovación"
+            imageSrc="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=450&fit=crop&q=80"
+            imageAlt="Tecnología e innovación"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fade edge inferior -->
+  <div class="hero-fade-edge"></div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 0 4rem;
+    overflow: hidden;
+  }
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #020617, #0f172a);
+    z-index: -1;
+  }
+
+  /* Grid pattern background */
+  .hero-background::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 64px 64px;
+    z-index: 0;
+  }
+
+  .gradient-blur {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.15;
+    animation: float 25s ease-in-out infinite, pulse 4s ease-in-out infinite;
+  }
+
+  .gradient-blur-1 {
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(135deg, #14b8a6, #10b981);
+    top: 10%;
+    left: 5%;
+    animation-delay: 0s, 0s;
+  }
+
+  .gradient-blur-2 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(135deg, #0d9488, #14b8a6);
+    top: 50%;
+    right: 5%;
+    animation-delay: 7s, 1s;
+  }
+
+  .gradient-blur-3 {
+    width: 450px;
+    height: 450px;
+    background: linear-gradient(135deg, #14b8a6, #10b981);
+    bottom: 10%;
+    left: 40%;
+    animation-delay: 14s, 2s;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(40px, -40px) scale(1.1);
+    }
+    66% {
+      transform: translate(-30px, 30px) scale(0.9);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0.15;
+    }
+    50% {
+      opacity: 0.25;
+    }
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .hero-content {
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .badge-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: linear-gradient(to right, rgba(20, 184, 166, 0.1), rgba(16, 185, 129, 0.1));
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    border-radius: 9999px;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .sparkle-icon {
+    color: #2dd4bf;
+    flex-shrink: 0;
+  }
+
+  .badge-text {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #2dd4bf;
+  }
+
+  .hero-title {
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
+    letter-spacing: -0.03em;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #2dd4bf, #14b8a6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+  }
+
+  .hero-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    color: var(--color-text-secondary);
+    max-width: 95%;
+  }
+
+  /* Feature Bullets */
+  .hero-features {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+  }
+
+  .feature-item:hover .feature-icon {
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.4);
+  }
+
+  .feature-icon {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+    padding: 0.5rem;
+    background: linear-gradient(135deg, #14b8a6, #10b981);
+    color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  /* CTA Buttons */
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    letter-spacing: 0.025em;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+    color: white;
+    border: 1px solid transparent;
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(20, 184, 166, 0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    backdrop-filter: blur(8px);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(20, 184, 166, 0.05);
+    border-color: rgba(20, 184, 166, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .arrow-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .btn-secondary:hover .arrow-icon {
+    transform: translateX(4px);
+  }
+
+  /* Stats - Trust Bar */
+  .hero-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    position: relative;
+  }
+
+  .stat-item::before {
+    content: '';
+    position: absolute;
+    left: -0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: linear-gradient(135deg, #14b8a6, #10b981);
+    border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  .stat-item:first-child::before {
+    display: none;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% {
+      opacity: 0.6;
+      transform: translateY(-50%) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.2);
+    }
+  }
+
+  .stat-value {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .stat-label {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Visual Cards */
+  .hero-visual {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  .platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* Fade edge inferior */
+  .hero-fade-edge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 128px;
+    background: linear-gradient(to top, #020617, transparent);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1280px) {
+    .hero-grid {
+      grid-template-columns: 45% 55%;
+      gap: 4rem;
+    }
+
+    .hero-title {
+      font-size: 3.75rem;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 4rem;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+    }
+
+    .hero-description {
+      max-width: 100%;
+    }
+
+    .platforms-grid {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 6rem 0 3rem;
+      min-height: auto;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      line-height: 1.15;
+    }
+
+    .hero-description {
+      font-size: 1rem;
+    }
+
+    .hero-features {
+      gap: 0.875rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-item {
+      font-size: 0.875rem;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hero-stats {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .stat-divider {
+      width: 100%;
+      height: 1px;
+    }
+
+    .platforms-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .badge-text {
+      font-size: 0.625rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .badge-wrapper {
+      padding: 0.5rem 1rem;
+    }
+
+    .btn {
+      padding: 0.875rem 1.5rem;
+      font-size: 0.875rem;
+    }
+  }
+</style>

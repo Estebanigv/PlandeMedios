@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" fill="none">
+  <defs>
+    <linearGradient id="teamGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f7fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#edf2f7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="300" height="300" fill="url(#teamGradient)"/>
+
+  <!-- Person icon -->
+  <circle cx="150" cy="110" r="35" fill="#3182ce" opacity="0.3"/>
+  <path d="M 100 200 Q 100 160 150 160 Q 200 160 200 200" fill="#3182ce" opacity="0.3"/>
+
+  <!-- Text -->
+  <text x="150" y="250" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#1a365d" text-anchor="middle">
+    Miembro del Equipo
+  </text>
+</svg>

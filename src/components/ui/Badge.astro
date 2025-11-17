@@ -1,0 +1,83 @@
+---
+/**
+ * Badge Component
+ *
+ * Reusable badge for categories, tags, and labels
+ *
+ * @prop {string} [variant="gradient"] - Badge variant: "gradient" | "solid" | "outline"
+ * @prop {string} [color="accent"] - Badge color (only for solid/outline variants)
+ * @prop {string} [size="medium"] - Badge size: "small" | "medium" | "large"
+ * @prop {string} [className] - Additional CSS classes
+ *
+ * @example
+ * <Badge variant="gradient">
+ *   Marketing Digital
+ * </Badge>
+ */
+
+interface Props {
+  variant?: 'gradient' | 'solid' | 'outline';
+  color?: string;
+  size?: 'small' | 'medium' | 'large';
+  className?: string;
+}
+
+const {
+  variant = 'gradient',
+  color = 'accent',
+  size = 'medium',
+  className = ''
+} = Astro.props;
+---
+
+<span
+  class={`badge ${className}`}
+  data-variant={variant}
+  data-size={size}
+  style={variant !== 'gradient' ? `--badge-color: var(--color-${color});` : ''}
+>
+  <slot />
+</span>
+
+<style>
+  .badge {
+    display: inline-block;
+    border-radius: 20px;
+    font-weight: 600;
+    width: fit-content;
+    transition: all 0.3s ease;
+  }
+
+  /* Sizes */
+  .badge[data-size="small"] {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .badge[data-size="medium"] {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .badge[data-size="large"] {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  /* Variants */
+  .badge[data-variant="gradient"] {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-secondary));
+    color: white;
+  }
+
+  .badge[data-variant="solid"] {
+    background-color: var(--badge-color);
+    color: white;
+  }
+
+  .badge[data-variant="outline"] {
+    background-color: transparent;
+    border: 2px solid var(--badge-color);
+    color: var(--badge-color);
+  }
+</style>

@@ -1,0 +1,84 @@
+---
+/**
+ * SectionHeader Component
+ *
+ * Reusable section header with title and description
+ *
+ * @prop {string} title - Main section title
+ * @prop {string} description - Section description text
+ * @prop {string} [align="center"] - Text alignment: "center" | "left" | "right"
+ * @prop {string} [className] - Additional CSS classes
+ *
+ * @example
+ * <SectionHeader
+ *   title="Our Services"
+ *   description="Three specialized platforms to boost your brand"
+ * />
+ */
+
+interface Props {
+  title: string;
+  description?: string;
+  align?: 'center' | 'left' | 'right';
+  className?: string;
+}
+
+const { title, description, align = 'center', className = '' } = Astro.props;
+---
+
+<div class={`section-header ${className}`} data-align={align}>
+  <h2 class="section-title">{title}</h2>
+  {description && <p class="section-description">{description}</p>}
+</div>
+
+<style>
+  .section-header {
+    margin-bottom: 4rem;
+  }
+
+  .section-header[data-align="center"] {
+    text-align: center;
+  }
+
+  .section-header[data-align="left"] {
+    text-align: left;
+  }
+
+  .section-header[data-align="right"] {
+    text-align: right;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+    letter-spacing: -0.025em;
+  }
+
+  .section-description {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .section-header[data-align="left"] .section-description {
+    margin: 0;
+  }
+
+  .section-header[data-align="right"] .section-description {
+    margin: 0 0 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .section-description {
+      font-size: 1rem;
+    }
+  }
+</style>

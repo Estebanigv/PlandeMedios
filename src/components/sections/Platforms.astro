@@ -1,0 +1,503 @@
+---
+/**
+ * Platforms Section
+ * Tour Graphic, Tour Motor, Tour Innovación
+ */
+
+const platforms = [
+  {
+    id: 'tour-graphic',
+    badge: 'TOUR GRAPHIC',
+    title: 'Tour Graphic',
+    description: 'Contenido visual y estrategias para pantallas LED, vallas y medios urbanos de alto impacto. Especialistas en diseño y producción para gran formato digital.',
+    gradient: 'from-blue-600 to-blue-800',
+    features: [
+      'Diseño para pantallas LED',
+      'Contenido para vallas digitales',
+      'Publicidad exterior (OOH)',
+      'Medios urbanos de alto impacto'
+    ],
+    imageSrc: 'https://images.unsplash.com/photo-1551818255-e6e10975bc17?w=800&h=600&fit=crop&q=80',
+    imageAlt: 'Pantalla LED urbana con contenido publicitario'
+  },
+  {
+    id: 'tour-motor',
+    badge: 'TOUR MOTOR',
+    title: 'Tour Motor',
+    description: 'Especialistas en marketing automotriz y contenido para el sector. Producción de contenido especializado para marcas automotrices y concesionarios.',
+    gradient: 'from-gray-700 to-gray-900',
+    features: [
+      'Marketing automotriz integral',
+      'Contenido para lanzamientos',
+      'Fotografía y video automotriz',
+      'Estrategias para concesionarios'
+    ],
+    imageSrc: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&h=600&fit=crop&q=80',
+    imageAlt: 'Vehículo moderno en showroom'
+  },
+  {
+    id: 'tour-innovation',
+    badge: 'TOUR INNOVACIÓN',
+    title: 'Tour Innovación',
+    description: 'Contenido tech, startups y empresas de innovación. Comunicación especializada para empresas de tecnología y ecosistema emprendedor.',
+    gradient: 'from-emerald-600 to-teal-700',
+    features: [
+      'Contenido tech y startups',
+      'Comunicación de innovación',
+      'Branding para tech companies',
+      'Estrategia digital avanzada'
+    ],
+    imageSrc: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop&q=80',
+    imageAlt: 'Tecnología e innovación'
+  }
+];
+---
+
+<section id="plataformas" class="platforms">
+  <!-- Background -->
+  <div class="platforms-background">
+    <div class="gradient-blur gradient-blur-1"></div>
+    <div class="gradient-blur gradient-blur-2"></div>
+  </div>
+
+  <!-- Grid pattern -->
+  <div class="grid-pattern"></div>
+
+  <div class="container-custom">
+    <!-- Section Header -->
+    <div class="section-header">
+      <div class="header-decorator">
+        <div class="decorator-line"></div>
+        <span class="decorator-text">Nuestras Plataformas</span>
+      </div>
+      <h2 class="section-title">
+        Especialización por Sector
+      </h2>
+      <p class="section-description">
+        Tres plataformas especializadas para impulsar tu marca en diferentes sectores del mercado
+      </p>
+    </div>
+
+    <!-- Platforms -->
+    <div class="platforms-list">
+      {platforms.map((platform, index) => (
+        <article class={`platform-item ${index % 2 === 1 ? 'platform-reverse' : ''}`}>
+          <div class="platform-grid">
+            <!-- Image Column -->
+            <div class="platform-image">
+              <img src={platform.imageSrc} alt={platform.imageAlt} loading="lazy" />
+              <div class="image-overlay"></div>
+            </div>
+
+            <!-- Content Column -->
+            <div class={`platform-content bg-gradient-to-br ${platform.gradient}`}>
+              <span class="platform-badge">{platform.badge}</span>
+              <h3 class="platform-title">{platform.title}</h3>
+              <p class="platform-description">{platform.description}</p>
+
+              <ul class="platform-features">
+                {platform.features.map(feature => (
+                  <li>{feature}</li>
+                ))}
+              </ul>
+
+              <a href={`/plataformas/${platform.id}`} class="platform-cta">
+                <span>Conocer más</span>
+                <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .platforms {
+    position: relative;
+    background: linear-gradient(to bottom, #020617, #0f172a, #020617);
+    padding: 8rem 0;
+    overflow: hidden;
+  }
+
+  .platforms-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .gradient-blur {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.12;
+    animation: float-slow 30s ease-in-out infinite;
+  }
+
+  .gradient-blur-1 {
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(135deg, #14b8a6, #10b981);
+    top: 10%;
+    left: -100px;
+    animation-delay: 0s;
+  }
+
+  .gradient-blur-2 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(135deg, #0d9488, #14b8a6);
+    bottom: 10%;
+    right: -100px;
+    animation-delay: 5s;
+  }
+
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(30px, -30px) scale(1.05);
+    }
+  }
+
+  /* Grid pattern background */
+  .grid-pattern {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 64px 64px;
+    z-index: 0;
+  }
+
+  .container-custom {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Section Header */
+  .section-header {
+    margin-bottom: 5rem;
+    max-width: 800px;
+    text-align: left;
+  }
+
+  .header-decorator {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .decorator-line {
+    height: 1px;
+    width: 48px;
+    background: linear-gradient(to right, #14b8a6, transparent);
+  }
+
+  .decorator-text {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    color: #2dd4bf;
+  }
+
+  .section-title {
+    font-size: 3.75rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--color-text);
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+
+  .section-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+
+  /* Platforms List */
+  .platforms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .platform-item {
+    position: relative;
+  }
+
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .platform-grid:hover {
+    border-color: rgba(20, 184, 166, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Reverse layout for odd items */
+  .platform-reverse .platform-grid {
+    direction: rtl;
+  }
+
+  .platform-reverse .platform-content {
+    direction: ltr;
+  }
+
+  /* Image Column */
+  .platform-image {
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+  }
+
+  .platform-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .platform-grid:hover .platform-image img {
+    transform: scale(1.05);
+  }
+
+  .image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+  }
+
+  /* Content Column */
+  .platform-content {
+    padding: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+  }
+
+  .from-blue-600 {
+    --tw-gradient-from: #2563eb;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(37, 99, 235, 0));
+  }
+
+  .to-blue-800 {
+    --tw-gradient-to: #1e40af;
+  }
+
+  .from-gray-700 {
+    --tw-gradient-from: #374151;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(55, 65, 81, 0));
+  }
+
+  .to-gray-900 {
+    --tw-gradient-to: #111827;
+  }
+
+  .from-emerald-600 {
+    --tw-gradient-from: #059669;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(5, 150, 105, 0));
+  }
+
+  .to-teal-700 {
+    --tw-gradient-to: #0f766e;
+  }
+
+  .platform-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: white;
+    width: fit-content;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .platform-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: white;
+    margin-bottom: 1rem;
+    letter-spacing: -0.025em;
+  }
+
+  .platform-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+  }
+
+  .platform-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .platform-features li {
+    font-size: 0.9375rem;
+    color: rgba(255, 255, 255, 0.85);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .platform-features li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* CTA Button */
+  .platform-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: fit-content;
+  }
+
+  .platform-cta:hover {
+    background: white;
+    color: #111827;
+    transform: translateY(-2px);
+  }
+
+  .arrow-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .platform-cta:hover .arrow-icon {
+    transform: translateX(4px);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .section-title {
+      font-size: 3rem;
+    }
+
+    .platform-title {
+      font-size: 2rem;
+    }
+
+    .platform-image {
+      min-height: 400px;
+    }
+
+    .platform-content {
+      padding: 2.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .platforms {
+      padding: 5rem 0;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 2.25rem;
+    }
+
+    .section-description {
+      font-size: 1rem;
+    }
+
+    .platforms-list {
+      gap: 2rem;
+    }
+
+    .platform-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .platform-reverse .platform-grid {
+      direction: ltr;
+    }
+
+    .platform-image {
+      min-height: 300px;
+    }
+
+    .platform-content {
+      padding: 2rem;
+    }
+
+    .platform-title {
+      font-size: 1.75rem;
+    }
+
+    .platform-description {
+      font-size: 0.9375rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .section-title {
+      font-size: 1.875rem;
+    }
+
+    .platform-title {
+      font-size: 1.5rem;
+    }
+
+    .platform-content {
+      padding: 1.75rem;
+    }
+
+    .platform-cta {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,0 +1,211 @@
+---
+/**
+ * Contact Section
+ * Displays contact form and contact information
+ */
+
+import { siteConfig } from '@/data/site';
+import { Mail, Phone, MapPin, Send } from 'lucide-astro';
+---
+
+<section id="contacto" class="relative py-32 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
+  <!-- Background grid -->
+  <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
+
+  <!-- Gradient orbs -->
+  <div class="absolute top-1/4 right-0 w-96 h-96 bg-gradient-to-br from-teal-500/10 to-emerald-500/10 rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-20">
+      <div class="flex items-center justify-center gap-3 mb-6">
+        <div class="h-px w-12 bg-gradient-to-r from-transparent via-teal-400 to-transparent"></div>
+        <span class="text-sm uppercase tracking-wider text-teal-400">Contacto</span>
+        <div class="h-px w-12 bg-gradient-to-r from-transparent via-teal-400 to-transparent"></div>
+      </div>
+      <h2 class="text-5xl md:text-6xl mb-6 text-white tracking-tight">
+        Conversemos sobre tu Proyecto
+      </h2>
+      <p class="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+        Estamos listos para ayudarte a crear contenido que conecte con tu audiencia.
+        Contáctanos y descubre cómo podemos potenciar tu marca.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12">
+      <!-- Contact Form -->
+      <div>
+        <form class="space-y-6" id="contactForm">
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label for="name" class="block mb-2 text-gray-300 text-sm">
+                Nombre completo *
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                placeholder="Tu nombre"
+                class="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all"
+              />
+            </div>
+            <div>
+              <label for="email" class="block mb-2 text-gray-300 text-sm">
+                Email *
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="tu@email.com"
+                class="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all"
+              />
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label for="company" class="block mb-2 text-gray-300 text-sm">
+                Empresa
+              </label>
+              <input
+                id="company"
+                name="company"
+                type="text"
+                placeholder="Nombre de tu empresa"
+                class="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all"
+              />
+            </div>
+            <div>
+              <label for="phone" class="block mb-2 text-gray-300 text-sm">
+                Teléfono
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="+56 9 1234 5678"
+                class="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="message" class="block mb-2 text-gray-300 text-sm">
+              Mensaje *
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              placeholder="Cuéntanos sobre tu proyecto..."
+              rows="5"
+              class="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all resize-none"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full px-6 py-3 bg-gradient-to-r from-teal-600 to-emerald-700 hover:from-teal-700 hover:to-emerald-800 text-white rounded-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 font-medium"
+          >
+            Enviar mensaje
+            <Send size={18} />
+          </button>
+        </form>
+
+        <!-- WhatsApp Button -->
+        <div class="mt-8">
+          <a
+            href="https://wa.me/56912345678?text=Hola%2C%20me%20gustaría%20conocer%20más%20sobre%20sus%20servicios"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block"
+          >
+            <button
+              type="button"
+              class="w-full px-6 py-3 border-2 border-green-500/50 bg-white/5 text-green-400 hover:bg-green-500/10 hover:border-green-400 rounded-lg transition-all flex items-center justify-center gap-2 font-medium"
+            >
+              <Phone size={18} />
+              Contactar por WhatsApp
+            </button>
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="space-y-6">
+        <div class="border border-white/10 bg-white/5 backdrop-blur-sm shadow-xl rounded-xl p-8">
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-12 h-12 bg-gradient-to-br from-teal-600 to-emerald-700 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg">
+              <Mail class="text-white" size={20} />
+            </div>
+            <div>
+              <h4 class="mb-2 text-white font-semibold">Email</h4>
+              <p class="text-gray-400">contacto@plandemedios.cl</p>
+              <p class="text-gray-400">ventas@plandemedios.cl</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-12 h-12 bg-gradient-to-br from-teal-600 to-emerald-700 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg">
+              <Phone class="text-white" size={20} />
+            </div>
+            <div>
+              <h4 class="mb-2 text-white font-semibold">Teléfono</h4>
+              <p class="text-gray-400">+56 2 1234 5678</p>
+              <p class="text-gray-400">+56 9 8765 4321</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-teal-600 to-emerald-700 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg">
+              <MapPin class="text-white" size={20} />
+            </div>
+            <div>
+              <h4 class="mb-2 text-white font-semibold">Oficina</h4>
+              <p class="text-gray-400">
+                Av. Providencia 1234, Of. 567<br />
+                Providencia, Santiago<br />
+                Chile
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hours -->
+        <div class="border border-white/10 bg-white/5 backdrop-blur-sm shadow-xl rounded-xl p-8">
+          <h4 class="mb-4 text-white font-semibold">Horarios de Atención</h4>
+          <div class="space-y-2 text-gray-400 text-sm">
+            <div class="flex justify-between">
+              <span>Lunes - Viernes:</span>
+              <span>9:00 - 18:00</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Sábado:</span>
+              <span>10:00 - 14:00</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Domingo:</span>
+              <span>Cerrado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Handle form submission
+  const form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Mock form submission
+      alert('¡Gracias por contactarnos! Te responderemos pronto.');
+      form.reset();
+    });
+  }
+</script>

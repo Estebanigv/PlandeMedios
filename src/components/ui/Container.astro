@@ -1,0 +1,40 @@
+---
+/**
+ * Container Component
+ *
+ * Reusable container wrapper with consistent padding
+ *
+ * @prop {string} [className] - Additional CSS classes
+ * @prop {string} [as="div"] - HTML element type
+ *
+ * @example
+ * <Container>
+ *   <p>Your content here</p>
+ * </Container>
+ */
+
+interface Props {
+  className?: string;
+  as?: 'div' | 'section' | 'article' | 'aside';
+}
+
+const { className = '', as: Element = 'div' } = Astro.props;
+---
+
+<Element class={`container-custom ${className}`}>
+  <slot />
+</Element>
+
+<style>
+  .container-custom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .container-custom {
+      padding: 0 1rem;
+    }
+  }
+</style>

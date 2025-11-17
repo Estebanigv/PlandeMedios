@@ -1,0 +1,467 @@
+---
+/**
+ * ContactForm Component
+ *
+ * Enhanced contact form with client-side validation, loading states,
+ * error handling, and success feedback.
+ *
+ * Features:
+ * - Client-side validation with Zod
+ * - Loading, success, and error states
+ * - Honeypot spam prevention
+ * - Accessible (ARIA) form controls
+ * - Automatic form reset after success
+ * - Rate limit handling
+ *
+ * @prop {string} [formId="contactForm"] - Form ID for script targeting
+ * @prop {string} [className] - Additional CSS classes
+ * @prop {string} [apiEndpoint="/api/contact"] - API endpoint URL
+ *
+ * @example
+ * <ContactForm formId="mainContactForm" />
+ */
+
+import Input from '../ui/Input.astro';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  formId?: string;
+  className?: string;
+  apiEndpoint?: string;
+}
+
+const { formId = 'contactForm', className = '', apiEndpoint = '/api/contact' } = Astro.props;
+---
+
+<form class={`contact-form ${className}`} id={formId} data-api-endpoint={apiEndpoint} novalidate>
+  <!-- Honeypot field for spam prevention (hidden from users) -->
+  <input
+    type="text"
+    name="_honeypot"
+    id={`${formId}-honeypot`}
+    class="honeypot"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+  />
+
+  <Input
+    type="text"
+    id={`${formId}-name`}
+    name="name"
+    label="Nombre completo"
+    placeholder="Juan Pérez"
+    required={true}
+    ariaDescribedby={`${formId}-name-error`}
+  />
+  <div class="error-message" id={`${formId}-name-error`} role="alert" aria-live="polite"></div>
+
+  <Input
+    type="email"
+    id={`${formId}-email`}
+    name="email"
+    label="Email"
+    placeholder="juan@empresa.com"
+    required={true}
+    ariaDescribedby={`${formId}-email-error`}
+  />
+  <div class="error-message" id={`${formId}-email-error`} role="alert" aria-live="polite"></div>
+
+  <Input
+    type="tel"
+    id={`${formId}-phone`}
+    name="phone"
+    label="Teléfono"
+    placeholder="+1 234 567 890"
+    ariaDescribedby={`${formId}-phone-error`}
+  />
+  <div class="error-message" id={`${formId}-phone-error`} role="alert" aria-live="polite"></div>
+
+  <Input
+    type="select"
+    id={`${formId}-service`}
+    name="service"
+    label="Servicio de interés"
+    required={true}
+    ariaDescribedby={`${formId}-service-error`}
+  >
+    <option value="">Selecciona un servicio</option>
+    <option value="tour-graphic">Tour Graphic</option>
+    <option value="tour-motor">Tour Motor</option>
+    <option value="tour-innovacion">Tour Innovación</option>
+    <option value="otro">Otro</option>
+  </Input>
+  <div class="error-message" id={`${formId}-service-error`} role="alert" aria-live="polite"></div>
+
+  <Input
+    type="textarea"
+    id={`${formId}-message`}
+    name="message"
+    label="Mensaje"
+    placeholder="Cuéntanos sobre tu proyecto..."
+    rows={5}
+    required={true}
+    ariaDescribedby={`${formId}-message-error`}
+  />
+  <div class="error-message" id={`${formId}-message-error`} role="alert" aria-live="polite"></div>
+
+  <!-- Form-level feedback messages -->
+  <div class="form-feedback" role="alert" aria-live="polite"></div>
+
+  <Button type="submit" variant="primary" fullWidth={true} showArrow={true}>
+    <span class="button-text">Enviar mensaje</span>
+    <span class="button-loading" style="display: none;">
+      <svg class="spinner" viewBox="0 0 24 24" fill="none">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      Enviando...
+    </span>
+  </Button>
+</form>
+
+<style>
+  .contact-form {
+    background: rgb(15 23 42 / 0.5);
+    border: 1px solid var(--color-border);
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 40px rgb(0 0 0 / 0.2);
+    position: relative;
+  }
+
+  /* Honeypot field - completely hidden */
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Error messages */
+  .error-message {
+    min-height: 0;
+    margin-top: -0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #dc2626;
+    transition: all 0.2s ease;
+  }
+
+  .error-message:empty {
+    margin: 0;
+  }
+
+  .error-message::before {
+    content: '⚠ ';
+  }
+
+  /* Form-level feedback */
+  .form-feedback {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+    animation: slideIn 0.3s ease;
+  }
+
+  .form-feedback.visible {
+    display: block;
+  }
+
+  .form-feedback.success {
+    background-color: rgb(16 185 129 / 0.1);
+    color: #10b981;
+    border: 1px solid rgb(16 185 129 / 0.3);
+  }
+
+  .form-feedback.error {
+    background-color: rgb(239 68 68 / 0.1);
+    color: #ef4444;
+    border: 1px solid rgb(239 68 68 / 0.3);
+  }
+
+  .form-feedback.info {
+    background-color: rgb(14 165 233 / 0.1);
+    color: #0ea5e9;
+    border: 1px solid rgb(14 165 233 / 0.3);
+  }
+
+  /* Loading spinner */
+  .spinner {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Input validation states */
+  :global(.contact-form input.error),
+  :global(.contact-form select.error),
+  :global(.contact-form textarea.error) {
+    border-color: #dc2626;
+  }
+
+  :global(.contact-form input.success),
+  :global(.contact-form select.success),
+  :global(.contact-form textarea.success) {
+    border-color: #16a34a;
+  }
+
+  /* Disabled form state */
+  .contact-form.submitting {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 968px) {
+    .contact-form {
+      padding: 2rem;
+    }
+  }
+</style>
+
+<script>
+  // Import validation from shared schema
+  import { validateContactForm } from '../../lib/validation';
+
+  /**
+   * Initialize contact forms
+   */
+  document.addEventListener('DOMContentLoaded', () => {
+    const forms = document.querySelectorAll('.contact-form');
+
+    forms.forEach((formElement) => {
+      const form = formElement as HTMLFormElement;
+      const apiEndpoint = form.dataset.apiEndpoint || '/api/contact';
+      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const buttonText = submitButton?.querySelector('.button-text') as HTMLElement;
+      const buttonLoading = submitButton?.querySelector('.button-loading') as HTMLElement;
+      const formFeedback = form.querySelector('.form-feedback') as HTMLElement;
+
+      // Clear error message for a field
+      function clearError(fieldName: string) {
+        const errorDiv = form.querySelector(`#${form.id}-${fieldName}-error`) as HTMLElement;
+        const input = form.querySelector(`[name="${fieldName}"]`) as HTMLInputElement;
+
+        if (errorDiv) errorDiv.textContent = '';
+        if (input) {
+          input.classList.remove('error');
+          input.removeAttribute('aria-invalid');
+        }
+      }
+
+      // Show error message for a field
+      function showError(fieldName: string, message: string) {
+        const errorDiv = form.querySelector(`#${form.id}-${fieldName}-error`) as HTMLElement;
+        const input = form.querySelector(`[name="${fieldName}"]`) as HTMLInputElement;
+
+        if (errorDiv) errorDiv.textContent = message;
+        if (input) {
+          input.classList.add('error');
+          input.setAttribute('aria-invalid', 'true');
+        }
+      }
+
+      // Clear all errors
+      function clearAllErrors() {
+        const errorDivs = form.querySelectorAll('.error-message');
+        const inputs = form.querySelectorAll('input, select, textarea');
+
+        errorDivs.forEach((div) => (div.textContent = ''));
+        inputs.forEach((input) => {
+          input.classList.remove('error', 'success');
+          input.removeAttribute('aria-invalid');
+        });
+      }
+
+      // Show form-level feedback
+      function showFeedback(message: string, type: 'success' | 'error' | 'info') {
+        if (!formFeedback) return;
+
+        formFeedback.textContent = message;
+        formFeedback.className = `form-feedback visible ${type}`;
+
+        // Auto-hide after 10 seconds
+        setTimeout(() => {
+          formFeedback.classList.remove('visible');
+        }, 10000);
+      }
+
+      // Set loading state
+      function setLoading(isLoading: boolean) {
+        if (!submitButton || !buttonText || !buttonLoading) return;
+
+        if (isLoading) {
+          form.classList.add('submitting');
+          submitButton.disabled = true;
+          buttonText.style.display = 'none';
+          buttonLoading.style.display = 'inline';
+        } else {
+          form.classList.remove('submitting');
+          submitButton.disabled = false;
+          buttonText.style.display = 'inline';
+          buttonLoading.style.display = 'none';
+        }
+      }
+
+      // Real-time validation on blur
+      form.querySelectorAll('input, select, textarea').forEach((input) => {
+        if (input.getAttribute('name') === '_honeypot') return; // Skip honeypot
+
+        input.addEventListener('blur', () => {
+          const fieldName = input.getAttribute('name');
+          if (!fieldName) return;
+
+          const formData = new FormData(form);
+          const data = Object.fromEntries(formData.entries());
+
+          const result = validateContactForm(data);
+
+          if (!result.success) {
+            const fieldError = result.error.errors.find(
+              (err) => err.path[0] === fieldName
+            );
+
+            if (fieldError) {
+              showError(fieldName, fieldError.message);
+            } else {
+              clearError(fieldName);
+              (input as HTMLElement).classList.add('success');
+            }
+          } else {
+            clearError(fieldName);
+            (input as HTMLElement).classList.add('success');
+          }
+        });
+      });
+
+      // Form submission
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Clear previous feedback
+        clearAllErrors();
+        if (formFeedback) formFeedback.classList.remove('visible');
+
+        // Get form data
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        // Client-side validation
+        const validationResult = validateContactForm(data);
+
+        if (!validationResult.success) {
+          validationResult.error.errors.forEach((err) => {
+            const fieldName = err.path[0] as string;
+            showError(fieldName, err.message);
+          });
+
+          showFeedback(
+            'Por favor corrige los errores en el formulario',
+            'error'
+          );
+
+          // Focus first error
+          const firstError = form.querySelector('.error') as HTMLElement;
+          firstError?.focus();
+
+          return;
+        }
+
+        // Submit to API
+        setLoading(true);
+
+        try {
+          const response = await fetch(apiEndpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            // Handle rate limiting
+            if (response.status === 429) {
+              const retryAfter = result.retryAfter || 60;
+              showFeedback(
+                `Has excedido el límite de envíos. Por favor espera ${retryAfter} segundos e intenta nuevamente.`,
+                'error'
+              );
+              return;
+            }
+
+            // Handle validation errors from server
+            if (result.errors && Array.isArray(result.errors)) {
+              result.errors.forEach((err: { field: string; message: string }) => {
+                const fieldName = err.field.split('.').pop() || err.field;
+                showError(fieldName, err.message);
+              });
+            }
+
+            showFeedback(
+              result.error || 'Error al enviar el mensaje. Por favor intenta nuevamente.',
+              'error'
+            );
+            return;
+          }
+
+          // Success!
+          showFeedback(
+            result.message || 'Mensaje enviado exitosamente. Nos pondremos en contacto contigo pronto.',
+            'success'
+          );
+
+          // Reset form
+          form.reset();
+          clearAllErrors();
+
+          // Remove success classes after reset
+          setTimeout(() => {
+            form.querySelectorAll('.success').forEach((el) => {
+              el.classList.remove('success');
+            });
+          }, 300);
+
+        } catch (error) {
+          console.error('[ContactForm] Submission error:', error);
+          showFeedback(
+            'Error de conexión. Por favor verifica tu internet e intenta nuevamente.',
+            'error'
+          );
+        } finally {
+          setLoading(false);
+        }
+      });
+    });
+  });
+</script>

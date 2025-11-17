@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: string | ImageMetadata;
+  alt: string;
+  width?: number;
+  height?: number;
+  loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
+  class?: string;
+  placeholder?: 'blur' | 'none';
+  quality?: number;
+  format?: 'webp' | 'avif' | 'png' | 'jpg';
+  sizes?: string;
+  widths?: number[];
+  densities?: number[];
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  loading = 'lazy',
+  decoding = 'async',
+  class: className = '',
+  placeholder = 'none',
+  quality = 80,
+  format = 'webp',
+  sizes,
+  widths,
+  densities = [1, 2],
+} = Astro.props;
+
+// Determine if src is a local image import or URL
+const isLocalImage = typeof src === 'object' || (typeof src === 'string' && src.startsWith('/'));
+
+// Generate responsive sizes if widths are provided
+const responsiveSizes = sizes || (widths ?
+  `(max-width: 640px) ${widths[0] || width}px, (max-width: 1024px) ${widths[1] || width}px, ${widths[2] || width}px`
+  : undefined);
+---
+
+{isLocalImage ? (
+  <Image
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding={decoding}
+    class={className}
+    quality={quality}
+    format={format}
+    sizes={responsiveSizes}
+    widths={widths}
+    densities={densities}
+  />
+) : (
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding={decoding}
+    class={className}
+  />
+)}
+
+<style>
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+</style>
