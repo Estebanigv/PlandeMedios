@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import tailwindcss from '@tailwindcss/vite';
+import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
@@ -33,6 +33,7 @@ export default defineConfig({
   },
 
   integrations: [
+    tailwind(),
     sitemap({
       // Customize sitemap configuration
       changefreq: 'weekly',
@@ -81,7 +82,6 @@ export default defineConfig({
   },
 
   vite: {
-    plugins: [tailwindcss()],
     build: {
       // Enable CSS code splitting
       cssCodeSplit: true,
