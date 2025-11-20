@@ -36,37 +36,67 @@ export const teamConfig: TeamConfig = {
   // Team members
   members: [
     {
-      name: "Juan Pérez",
-      role: "Director Creativo",
-      bio: "Con más de 10 años de experiencia en diseño gráfico y dirección creativa.",
-      image: "/team/juan-perez.jpg",
+      name: "José Andraca",
+      role: "Gerente General",
+      bio: "Líder con amplia trayectoria en medios y comunicación de marca.",
+      image: "/images/Equipo/JoseAndraca.jpeg",
       social: {
-        linkedin: "https://linkedin.com/in/juanperez",
-        email: "juan@plandemedios.com"
-      },
-      specialties: ["Diseño Gráfico", "Branding", "Dirección de Arte"]
+        email: "joseluis.andraca@plandemedios.cl"
+      }
     },
     {
-      name: "María González",
-      role: "Directora de Estrategia Digital",
-      bio: "Especialista en marketing digital y estrategias de contenido.",
-      image: "/team/maria-gonzalez.jpg",
+      name: "Hortencia Fritz",
+      role: "Editora General - Tour Innovación",
+      bio: "Especialista en contenido editorial y gestión de proyectos de innovación.",
+      image: "/images/Equipo/HortenciaFritz.jpeg",
       social: {
-        linkedin: "https://linkedin.com/in/mariagonzalez",
-        email: "maria@plandemedios.com"
-      },
-      specialties: ["Marketing Digital", "Estrategia de Contenido", "SEO"]
+        email: "hortencia.fritz@plandemedios.cl"
+      }
     },
     {
-      name: "Carlos Rodríguez",
-      role: "Director de Innovación",
-      bio: "Experto en tecnologías emergentes y soluciones innovadoras.",
-      image: "/team/carlos-rodriguez.jpg",
+      name: "Rodrigo Castillo",
+      role: "Editor General - Tour Motor",
+      bio: "Experto en contenido automotriz y medios especializados.",
+      image: "/images/Equipo/RodrigoCastillo.jpeg",
       social: {
-        linkedin: "https://linkedin.com/in/carlosrodriguez",
-        email: "carlos@plandemedios.com"
-      },
-      specialties: ["Innovación Digital", "IA", "Automatización"]
+        email: "rodrigo.castillo@plandemedios.cl"
+      }
+    },
+    {
+      name: "César Olate",
+      role: "Realizador Audiovisual",
+      bio: "Profesional en producción y realización de contenido audiovisual.",
+      image: "/images/Equipo/CesarOlate.png",
+      social: {
+        email: "cesar.olate@plandemedios.cl"
+      }
+    },
+    {
+      name: "Jaime San Martín",
+      role: "Realizador Audiovisual",
+      bio: "Especialista en producción audiovisual y dirección de contenido.",
+      image: "/images/Equipo/Jaime San Martín.jpeg",
+      social: {
+        email: "jaime.sanmartin@plandemedios.cl"
+      }
+    },
+    {
+      name: "Jessica Rivas",
+      role: "Área Gráfica Digital",
+      bio: "Diseñadora especializada en formatos digitales y grandes formatos.",
+      image: "/images/Equipo/Jessica Rivas.jpeg",
+      social: {
+        email: "jessica.rivas@plandemedios.cl"
+      }
+    },
+    {
+      name: "Diego Bustamante",
+      role: "Analista de Operaciones",
+      bio: "Gestión y optimización de operaciones y procesos.",
+      image: "/images/Equipo/Diego Bustamante.png",
+      social: {
+        email: "diego.bustamante@plandemedios.cl"
+      }
     }
   ],
 
@@ -106,9 +136,9 @@ export const teamConfig: TeamConfig = {
 
   // Company culture
   culture: {
-    mission: "Transformar ideas en experiencias visuales impactantes que generen resultados medibles para nuestros clientes.",
-    vision: "Ser la agencia de referencia en generación de contenido multiplataforma, reconocida por nuestra creatividad, innovación y resultados excepcionales.",
-    motto: "Transformamos ideas en experiencias visuales impactantes"
+    mission: "Desarrollar contenidos relevantes y transformadores para las audiencias de hoy, en alianza con los medios.",
+    vision: "Ser la empresa de referencia en desarrollo de contenido audiovisual, editorial y publicitario, conectando marcas con sus audiencias de manera efectiva.",
+    motto: "Comunicación de marca para las audiencias actuales"
   }
 };
 

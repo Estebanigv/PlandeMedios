@@ -53,24 +53,24 @@ export interface LegalInfo {
 
 export const siteConfig: SiteConfig = {
   name: "Plan de Medios",
-  tagline: "Contenido y medios que conectan marcas con audiencias reales",
-  description: "Estrategia integral de contenido y planificación de medios. Creamos, producimos y distribuimos contenido que genera resultados medibles para tu marca.",
-  url: process.env.PUBLIC_SITE_URL || "https://www.plandemedios.com",
+  tagline: "Comunicación de marca para las audiencias actuales",
+  description: "Empresa especializada en el desarrollo de contenidos audiovisuales, editoriales y publicitarios en alianza con los medios. Contamos con Tour Innovación y Tour Graphic.",
+  url: process.env.PUBLIC_SITE_URL || "https://www.plandemedios.cl",
   logo: "/logo.png",
   ogImage: "/og-image.jpg",
   author: "Plan de Medios",
   language: "es",
-  locale: "es_ES",
+  locale: "es_CL",
 
   contact: {
-    email: process.env.PUBLIC_CONTACT_EMAIL || "info@plandemedios.com",
-    phone: process.env.PUBLIC_CONTACT_PHONE || "+1234567890",
-    phoneFormatted: process.env.PUBLIC_CONTACT_PHONE_FORMATTED || "+1 (234) 567-890",
+    email: process.env.PUBLIC_CONTACT_EMAIL || "joseluis.andraca@plandemedios.cl",
+    phone: process.env.PUBLIC_CONTACT_PHONE || "+56977771499",
+    phoneFormatted: process.env.PUBLIC_CONTACT_PHONE_FORMATTED || "+569 7777 1499",
     address: {
       street: process.env.PUBLIC_ADDRESS_STREET,
-      city: process.env.PUBLIC_ADDRESS_CITY || "Tu Ciudad",
-      country: process.env.PUBLIC_ADDRESS_COUNTRY || "País",
-      full: process.env.PUBLIC_ADDRESS_FULL || "Tu Ciudad, País"
+      city: process.env.PUBLIC_ADDRESS_CITY || "Santiago",
+      country: process.env.PUBLIC_ADDRESS_COUNTRY || "Chile",
+      full: process.env.PUBLIC_ADDRESS_FULL || "Santiago, Chile"
     }
   },
 
