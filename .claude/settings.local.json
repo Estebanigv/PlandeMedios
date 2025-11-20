@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.figma.com)",
+      "Bash(npm create astro@latest:*)",
+      "Bash(npm install:*)",
+      "Bash(npx astro add:*)",
+      "Bash(npm run dev:*)",
+      "Bash(dir:*)",
+      "Bash(nul)",
+      "Bash(npm run build:*)",
+      "Bash(tree:*)",
+      "Bash(find:*)",
+      "Bash(claude mcp list)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git config:*)",
+      "Bash(git push:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(start http://localhost:3000)",
+      "Bash(taskkill:*)",
+      "Bash(powershell \"Stop-Process -Id 34460 -Force\")",
+      "Bash(start http://localhost:4321)",
+      "Bash(gh repo create:*)",
+      "Bash(git branch:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
