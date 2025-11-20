@@ -1,0 +1,94 @@
+---
+/**
+ * TrendCard Component
+ *
+ * Displays a blog post/trend article card
+ *
+ * @prop {string} title - Article title
+ * @prop {string} excerpt - Article excerpt/description
+ * @prop {string} category - Article category
+ * @prop {string} readTime - Reading time (e.g., "5 min read")
+ * @prop {string} href - Link to article
+ *
+ * @example
+ * <TrendCard
+ *   title="Future of Digital Marketing"
+ *   excerpt="Exploring emerging trends..."
+ *   category="Marketing"
+ *   readTime="5 min"
+ *   href="/blog/future-marketing"
+ * />
+ */
+
+import Card from '../ui/Card.astro';
+import Badge from '../ui/Badge.astro';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  title: string;
+  excerpt: string;
+  category: string;
+  readTime: string;
+  href: string;
+}
+
+const { title, excerpt, category, readTime, href } = Astro.props;
+---
+
+<Card className="trend-card" as="article">
+  <Badge variant="gradient" className="trend-category">
+    {category}
+  </Badge>
+
+  <h3 class="trend-title">{title}</h3>
+  <p class="trend-excerpt">{excerpt}</p>
+
+  <div class="trend-meta">
+    <span class="read-time">{readTime}</span>
+    <Button variant="link" href={href} className="read-more">
+      Leer más →
+    </Button>
+  </div>
+</Card>
+
+<style>
+  .trend-card {
+    height: 100%;
+  }
+
+  .trend-category {
+    margin-bottom: 1rem;
+  }
+
+  .trend-title {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+  }
+
+  .trend-excerpt {
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .trend-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-bg-light);
+    margin-top: auto;
+  }
+
+  .read-time {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+  }
+
+  .read-more:hover {
+    transform: translateX(5px);
+  }
+</style>

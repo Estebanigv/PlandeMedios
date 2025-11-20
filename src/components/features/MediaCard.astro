@@ -1,0 +1,170 @@
+---
+/**
+ * MediaCard Component
+ * Modern card for displaying active media panels with gradients
+ */
+
+interface Props {
+  title: string;
+  status: string;
+  metric: string;
+  metricValue: string;
+  gradient: string;
+}
+
+const { title, status, metric, metricValue, gradient } = Astro.props;
+---
+
+<div class={`media-card gradient-${gradient}`}>
+  <div class="card-header">
+    <h4 class="card-title">{title}</h4>
+    <span class="status-badge">{status}</span>
+  </div>
+  <div class="card-body">
+    <div class="metric-value">{metricValue}</div>
+    <div class="metric-label">{metric}</div>
+  </div>
+  <div class="card-bar"></div>
+</div>
+
+<style>
+  .media-card {
+    position: relative;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: rgb(15 23 42 / 0.5);
+    border: 1px solid var(--color-border);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  .media-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+
+  .media-card:hover {
+    transform: translateY(-2px);
+    border-color: rgb(51 65 85 / 0.8);
+  }
+
+  .media-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Gradient variations */
+  .gradient-amber::before {
+    background: linear-gradient(90deg, #f59e0b, #ea580c);
+  }
+
+  .gradient-rose::before {
+    background: linear-gradient(90deg, #f43f5e, #dc2626);
+  }
+
+  .gradient-sky::before {
+    background: linear-gradient(90deg, #14b8a6, #0d9488);
+  }
+
+  .gradient-teal::before {
+    background: linear-gradient(90deg, #14b8a6, #0d9488);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .card-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+    letter-spacing: 0.025em;
+  }
+
+  .status-badge {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #10b981;
+    background: rgb(16 185 129 / 0.1);
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(16 185 129 / 0.2);
+  }
+
+  .card-body {
+    margin-bottom: 0.75rem;
+  }
+
+  .metric-value {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.025em;
+  }
+
+  .metric-label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .card-bar {
+    height: 4px;
+    border-radius: 9999px;
+    background: rgb(51 65 85 / 0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 65%;
+    border-radius: 9999px;
+    transition: width 0.3s ease;
+  }
+
+  .gradient-amber .card-bar::after {
+    background: linear-gradient(90deg, #f59e0b, #ea580c);
+  }
+
+  .gradient-rose .card-bar::after {
+    background: linear-gradient(90deg, #f43f5e, #dc2626);
+  }
+
+  .gradient-sky .card-bar::after {
+    background: linear-gradient(90deg, #14b8a6, #0d9488);
+  }
+
+  .gradient-teal .card-bar::after {
+    background: linear-gradient(90deg, #14b8a6, #0d9488);
+  }
+
+  @media (max-width: 768px) {
+    .media-card {
+      padding: 1rem;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,144 @@
+---
+/**
+ * Input Component
+ *
+ * Reusable form input component
+ *
+ * @prop {string} [type="text"] - Input type
+ * @prop {string} [name] - Input name
+ * @prop {string} [id] - Input id
+ * @prop {string} [label] - Input label
+ * @prop {string} [placeholder] - Placeholder text
+ * @prop {boolean} [required=false] - Required field
+ * @prop {string} [value] - Default value
+ * @prop {number} [rows] - Number of rows (for textarea)
+ * @prop {string} [className] - Additional CSS classes
+ *
+ * @example
+ * <Input
+ *   type="email"
+ *   label="Email"
+ *   name="email"
+ *   required={true}
+ *   placeholder="you@example.com"
+ * />
+ */
+
+interface Props {
+  type?: 'text' | 'email' | 'tel' | 'password' | 'number' | 'textarea' | 'select';
+  name?: string;
+  id?: string;
+  label?: string;
+  placeholder?: string;
+  required?: boolean;
+  value?: string;
+  rows?: number;
+  className?: string;
+}
+
+const {
+  type = 'text',
+  name,
+  id,
+  label,
+  placeholder,
+  required = false,
+  value,
+  rows = 5,
+  className = ''
+} = Astro.props;
+
+const inputId = id || name;
+---
+
+<div class={`form-group ${className}`}>
+  {label && (
+    <label for={inputId} class="form-label">
+      {label}
+      {required && <span class="required">*</span>}
+    </label>
+  )}
+
+  {type === 'textarea' ? (
+    <textarea
+      id={inputId}
+      name={name}
+      required={required}
+      placeholder={placeholder}
+      rows={rows}
+      class="form-input form-textarea"
+    >{value}</textarea>
+  ) : type === 'select' ? (
+    <select
+      id={inputId}
+      name={name}
+      required={required}
+      class="form-input form-select"
+    >
+      <slot />
+    </select>
+  ) : (
+    <input
+      type={type}
+      id={inputId}
+      name={name}
+      required={required}
+      placeholder={placeholder}
+      value={value}
+      class="form-input"
+    />
+  )}
+</div>
+
+<style>
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .required {
+    color: var(--color-accent);
+    margin-left: 0.25rem;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    font-size: 0.9375rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background-color: rgb(30 41 59 / 0.3);
+    color: var(--color-text);
+  }
+
+  .form-input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    background-color: rgb(30 41 59 / 0.5);
+    box-shadow: 0 0 0 3px rgb(14 165 233 / 0.1);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-select {
+    cursor: pointer;
+  }
+</style>

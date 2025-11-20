@@ -1,0 +1,85 @@
+---
+/**
+ * Card Component
+ *
+ * Reusable card component with hover effects
+ *
+ * @prop {string} [variant="default"] - Card variant: "default" | "bordered" | "gradient"
+ * @prop {boolean} [hoverable=true] - Enable hover effects
+ * @prop {string} [padding="2rem"] - Card padding
+ * @prop {string} [className] - Additional CSS classes
+ *
+ * @example
+ * <Card variant="bordered" hoverable={true}>
+ *   <h3>Card Title</h3>
+ *   <p>Card content</p>
+ * </Card>
+ */
+
+interface Props {
+  variant?: 'default' | 'bordered' | 'gradient';
+  hoverable?: boolean;
+  padding?: string;
+  className?: string;
+}
+
+const {
+  variant = 'default',
+  hoverable = true,
+  padding = '2rem',
+  className = ''
+} = Astro.props;
+---
+
+<div
+  class={`card ${className}`}
+  data-variant={variant}
+  data-hoverable={hoverable}
+  style={`--card-padding: ${padding};`}
+>
+  <slot />
+</div>
+
+<style>
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: var(--card-padding, 2rem);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card[data-variant="default"] {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 2px solid transparent;
+  }
+
+  .card[data-variant="bordered"] {
+    border: 2px solid var(--color-bg-light);
+  }
+
+  .card[data-variant="gradient"] {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: white;
+  }
+
+  .card[data-hoverable="true"]:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .card[data-hoverable="true"][data-variant="default"]:hover {
+    border-color: var(--color-accent);
+  }
+
+  .card[data-hoverable="true"][data-variant="gradient"]:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      padding: 1.5rem;
+    }
+  }
+</style>

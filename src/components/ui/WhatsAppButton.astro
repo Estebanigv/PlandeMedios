@@ -1,0 +1,166 @@
+---
+import { siteConfig } from '@/data/site';
+
+// Convertir el número de teléfono al formato de WhatsApp (sin espacios, guiones ni paréntesis)
+const whatsappNumber = siteConfig.contact.phone.replace(/[^\d+]/g, '');
+const whatsappMessage = encodeURIComponent('Hola! Me gustaría obtener más información sobre sus servicios de contenido y medios.');
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+---
+
+<a
+  href={whatsappUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="whatsapp-float"
+  aria-label="Contactar por WhatsApp"
+>
+  <div class="whatsapp-icon">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="currentColor"/>
+      <path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652a12.062 12.062 0 005.713 1.448h.005c6.585 0 11.946-5.336 11.949-11.896 0-3.176-1.24-6.165-3.482-8.451zm-8.475 18.29c-1.776 0-3.517-.478-5.033-1.378l-.361-.214-3.741.98.998-3.648-.235-.374a9.86 9.86 0 01-1.511-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.993c-.003 5.45-4.437 9.887-9.886 9.887z" fill="currentColor"/>
+    </svg>
+  </div>
+  <span class="whatsapp-tooltip">¿Necesitas ayuda?</span>
+</a>
+
+<style>
+  .whatsapp-float {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: slideInRight 0.6s ease-out;
+  }
+
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .whatsapp-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow:
+      0 4px 12px rgba(37, 211, 102, 0.3),
+      0 8px 24px rgba(37, 211, 102, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow:
+        0 4px 12px rgba(37, 211, 102, 0.3),
+        0 8px 24px rgba(37, 211, 102, 0.2),
+        0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    50% {
+      box-shadow:
+        0 4px 12px rgba(37, 211, 102, 0.3),
+        0 8px 24px rgba(37, 211, 102, 0.2),
+        0 0 0 10px rgba(37, 211, 102, 0);
+    }
+  }
+
+  .whatsapp-float:hover .whatsapp-icon {
+    transform: scale(1.1);
+    box-shadow:
+      0 8px 20px rgba(37, 211, 102, 0.4),
+      0 12px 32px rgba(37, 211, 102, 0.3);
+    animation: none;
+  }
+
+  .whatsapp-tooltip {
+    background: white;
+    color: #128C7E;
+    padding: 0.75rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.1),
+      0 2px 4px rgba(0, 0, 0, 0.06);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(10px);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .whatsapp-float:hover .whatsapp-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Versión móvil - solo icono */
+  @media (max-width: 768px) {
+    .whatsapp-float {
+      bottom: 1.5rem;
+      right: 1.5rem;
+    }
+
+    .whatsapp-icon {
+      width: 56px;
+      height: 56px;
+    }
+
+    .whatsapp-icon svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    .whatsapp-tooltip {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .whatsapp-float {
+      bottom: 1rem;
+      right: 1rem;
+    }
+
+    .whatsapp-icon {
+      width: 52px;
+      height: 52px;
+    }
+
+    .whatsapp-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  /* Accessibility */
+  .whatsapp-float:focus {
+    outline: 2px solid #25D366;
+    outline-offset: 4px;
+  }
+
+  .whatsapp-float:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  .whatsapp-float:focus-visible {
+    outline: 2px solid #25D366;
+    outline-offset: 4px;
+  }
+</style>

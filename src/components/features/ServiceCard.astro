@@ -1,0 +1,147 @@
+---
+/**
+ * ServiceCard Component
+ *
+ * Displays a service with icon, title, description, features, and link
+ *
+ * @prop {string} icon - Service icon (emoji or text)
+ * @prop {string} title - Service title
+ * @prop {string} subtitle - Service subtitle
+ * @prop {string} description - Service description
+ * @prop {string[]} features - List of service features
+ * @prop {string} href - Link to service page
+ * @prop {number} [delay=0] - Animation delay
+ *
+ * @example
+ * <ServiceCard
+ *   icon="🎨"
+ *   title="Tour Graphic"
+ *   subtitle="Diseño Visual"
+ *   description="Creamos contenido visual impactante"
+ *   features={["Branding", "Diseño web", "Motion graphics"]}
+ *   href="/servicios/tour-graphic"
+ * />
+ */
+
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  icon: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  features: string[];
+  href: string;
+  delay?: number;
+}
+
+const { icon, title, subtitle, description, features, href, delay = 0 } = Astro.props;
+---
+
+<Card className="service-card" padding="2.5rem" data-aos="fade-up" data-aos-delay={delay}>
+  <div class="service-icon">
+    <span class="icon">{icon}</span>
+  </div>
+
+  <h3 class="service-title">{title}</h3>
+  <p class="service-subtitle">{subtitle}</p>
+  <p class="service-description">{description}</p>
+
+  <ul class="service-features">
+    {features.map(feature => (
+      <li class="feature-item">
+        <span class="feature-check">✓</span>
+        <span>{feature}</span>
+      </li>
+    ))}
+  </ul>
+
+  <Button variant="link" href={href} showArrow={true} className="service-link">
+    Conocer más
+  </Button>
+</Card>
+
+<style>
+  .service-card {
+    height: 100%;
+    background: rgb(15 23 42 / 0.5) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 1.5rem !important;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgb(51 65 85 / 0.8) !important;
+    box-shadow: 0 20px 40px rgb(0 0 0 / 0.3);
+  }
+
+  .service-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #0ea5e9, #6366f1);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 16px rgb(14 165 233 / 0.2);
+  }
+
+  .icon {
+    font-size: 2rem;
+  }
+
+  .service-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.025em;
+  }
+
+  .service-subtitle {
+    font-size: 0.8125rem;
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .service-description {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+    font-size: 0.9375rem;
+  }
+
+  .service-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.625rem;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .feature-check {
+    color: #10b981;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .service-link {
+    margin-top: auto;
+  }
+</style>

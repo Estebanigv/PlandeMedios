@@ -1,0 +1,211 @@
+---
+---
+
+<section class="announcement-banner">
+  <div class="banner-content">
+    <div class="banner-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+      </svg>
+    </div>
+    <div class="banner-text">
+      <span class="banner-label">Nuevo:</span>
+      <span class="banner-message">Estrategias de contenido 360° para marcas que quieren destacar</span>
+    </div>
+    <a href="#contacto" class="banner-cta">
+      Descubre más
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+  <div class="banner-gradient"></div>
+</section>
+
+<style>
+  .announcement-banner {
+    position: relative;
+    background: linear-gradient(135deg, #14b8a6 0%, #0d9488 50%, #10b981 100%);
+    padding: 1rem 0;
+    margin-top: 80px;
+    width: 100%;
+  }
+
+
+  .banner-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    pointer-events: none;
+    animation: gradientShift 8s ease-in-out infinite;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  .banner-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    z-index: 1;
+  }
+
+  .banner-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    backdrop-filter: blur(8px);
+    animation: iconPulse 2s ease-in-out infinite;
+  }
+
+  .banner-icon svg {
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  }
+
+  @keyframes iconPulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+    }
+  }
+
+  .banner-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .banner-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8125rem;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 0.25rem 0.625rem;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+  }
+
+  .banner-message {
+    animation: fadeIn 1s ease-out 0.3s both;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .banner-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1.25rem;
+    background: rgba(255, 255, 255, 0.95);
+    color: #0d9488;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.025em;
+  }
+
+  .banner-cta:hover {
+    background: white;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .banner-cta svg {
+    transition: transform 0.3s ease;
+  }
+
+  .banner-cta:hover svg {
+    transform: translateX(3px);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .announcement-banner {
+      padding: 0.875rem 0;
+    }
+
+    .banner-content {
+      flex-direction: column;
+      gap: 0.875rem;
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .banner-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .banner-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .banner-text {
+      flex-direction: column;
+      gap: 0.375rem;
+      font-size: 0.875rem;
+    }
+
+    .banner-label {
+      font-size: 0.75rem;
+    }
+
+    .banner-cta {
+      font-size: 0.8125rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .banner-text {
+      font-size: 0.8125rem;
+    }
+
+    .banner-message {
+      max-width: 280px;
+      line-height: 1.4;
+    }
+  }
+</style>

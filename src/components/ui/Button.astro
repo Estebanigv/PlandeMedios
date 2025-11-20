@@ -1,0 +1,150 @@
+---
+/**
+ * Button Component
+ *
+ * Reusable button with multiple variants
+ *
+ * @prop {string} [variant="primary"] - Button variant: "primary" | "secondary" | "outline" | "link"
+ * @prop {string} [size="medium"] - Button size: "small" | "medium" | "large"
+ * @prop {string} [href] - If provided, renders as link
+ * @prop {string} [type="button"] - Button type (if not link)
+ * @prop {boolean} [fullWidth=false] - Make button full width
+ * @prop {boolean} [showArrow=false] - Show arrow icon
+ * @prop {string} [className] - Additional CSS classes
+ *
+ * @example
+ * <Button variant="primary" showArrow={true}>
+ *   Learn More
+ * </Button>
+ */
+
+interface Props {
+  variant?: 'primary' | 'secondary' | 'outline' | 'link';
+  size?: 'small' | 'medium' | 'large';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  fullWidth?: boolean;
+  showArrow?: boolean;
+  className?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'medium',
+  href,
+  type = 'button',
+  fullWidth = false,
+  showArrow = false,
+  className = ''
+} = Astro.props;
+
+const Element = href ? 'a' : 'button';
+---
+
+<Element
+  class={`btn ${className}`}
+  data-variant={variant}
+  data-size={size}
+  data-full-width={fullWidth}
+  href={href}
+  type={!href ? type : undefined}
+>
+  <span class="btn-content">
+    <slot />
+    {showArrow && <span class="arrow">→</span>}
+  </span>
+</Element>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-family: inherit;
+  }
+
+  .btn[data-full-width="true"] {
+    width: 100%;
+  }
+
+  /* Sizes */
+  .btn[data-size="small"] {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .btn[data-size="medium"] {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .btn[data-size="large"] {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
+
+  /* Variants */
+  .btn[data-variant="primary"] {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: white;
+  }
+
+  .btn[data-variant="primary"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn[data-variant="secondary"] {
+    background: var(--color-secondary);
+    color: white;
+  }
+
+  .btn[data-variant="secondary"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .btn[data-variant="outline"] {
+    background: transparent;
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .btn[data-variant="outline"]:hover {
+    background: var(--color-accent);
+    color: white;
+  }
+
+  .btn[data-variant="link"] {
+    background: transparent;
+    color: var(--color-accent);
+    padding: 0;
+    border: none;
+  }
+
+  .btn[data-variant="link"]:hover {
+    gap: 1rem;
+  }
+
+  .btn-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .arrow {
+    transition: transform 0.3s ease;
+    display: inline-block;
+  }
+
+  .btn:hover .arrow {
+    transform: translateX(5px);
+  }
+</style>

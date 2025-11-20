@@ -1,0 +1,586 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/sections/Header.astro';
+import Footer from '../../components/sections/Footer.astro';
+
+export const getStaticPaths = (async () => {
+  const services = await getCollection('services');
+  return services.map(service => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}) satisfies GetStaticPaths;
+
+const { service } = Astro.props;
+const { Content } = await service.render();
+
+// Get other services
+const allServices = await getCollection('services');
+const otherServices = allServices
+  .filter(s => s.slug !== service.slug)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout
+  title={`${service.data.title} - ${service.data.subtitle} | Plan de Medios`}
+  description={service.data.description}
+>
+  <Header />
+
+  <main class="service-page">
+    <section class="service-hero">
+      <div class="container-custom">
+        <a href="/#servicios" class="back-link">← Volver a servicios</a>
+
+        <div class="hero-content">
+          <div class="hero-icon">
+            <span class="icon">{service.data.icon}</span>
+          </div>
+
+          <h1 class="service-title">{service.data.title}</h1>
+          <p class="service-subtitle">{service.data.subtitle}</p>
+          <p class="service-description">{service.data.description}</p>
+
+          <ul class="service-features">
+            {service.data.features.map(feature => (
+              <li class="feature-item">
+                <span class="feature-check">✓</span>
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="hero-cta">
+            <a href="#contacto" class="primary-btn">Solicitar información</a>
+            <a href="#detalles" class="secondary-btn">Conocer más</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="detalles" class="service-details section-padding">
+      <div class="container-custom-narrow">
+        <div class="prose">
+          <Content />
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="contact-section section-padding">
+      <div class="container-custom">
+        <div class="contact-content">
+          <h2 class="section-title">Hablemos de tu proyecto</h2>
+          <p class="section-description">
+            Estamos listos para ayudarte a alcanzar tus objetivos de comunicación y marketing
+          </p>
+
+          <div class="contact-grid">
+            <div class="contact-info">
+              <h3>Información de contacto</h3>
+              <div class="info-item">
+                <span class="info-icon">📧</span>
+                <div>
+                  <strong>Email</strong>
+                  <p>contacto@plandemedios.com</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">📱</span>
+                <div>
+                  <strong>Teléfono</strong>
+                  <p>+56 9 XXXX XXXX</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">📍</span>
+                <div>
+                  <strong>Ubicación</strong>
+                  <p>Santiago, Chile</p>
+                </div>
+              </div>
+            </div>
+
+            <form class="contact-form">
+              <div class="form-group">
+                <label for="name">Nombre completo</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Teléfono</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  class="form-input"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="message">Mensaje</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  required
+                  class="form-input"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn">
+                Enviar mensaje
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {otherServices.length > 0 && (
+      <section class="other-services section-padding">
+        <div class="container-custom">
+          <h2 class="section-title">Otros servicios</h2>
+          <div class="services-grid">
+            {otherServices.map(otherService => (
+              <div class="service-card">
+                <div class="service-icon-small">
+                  <span class="icon">{otherService.data.icon}</span>
+                </div>
+                <h3 class="card-title">{otherService.data.title}</h3>
+                <p class="card-subtitle">{otherService.data.subtitle}</p>
+                <p class="card-description">{otherService.data.description}</p>
+                <a href={`/servicios/${otherService.slug}`} class="card-link">
+                  Conocer más →
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .container-custom-narrow {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .service-hero {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: white;
+    padding: 6rem 0 4rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    margin-bottom: 3rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+
+  .back-link:hover {
+    color: white;
+    transform: translateX(-5px);
+  }
+
+  .hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-icon {
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .icon {
+    font-size: 4rem;
+  }
+
+  .service-title {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .service-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    font-weight: 500;
+  }
+
+  .service-description {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .service-features {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    text-align: left;
+  }
+
+  .feature-check {
+    font-size: 1.5rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .primary-btn {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .secondary-btn {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+
+  .secondary-btn:hover {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .service-details {
+    background: white;
+  }
+
+  .prose {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--color-text);
+  }
+
+  .prose :global(h2) {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+
+  .prose :global(h3) {
+    font-size: 1.75rem;
+    color: var(--color-primary);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .prose :global(h4) {
+    font-size: 1.35rem;
+    color: var(--color-primary);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+
+  .prose :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+  }
+
+  .prose :global(li) {
+    margin-bottom: 0.75rem;
+  }
+
+  .prose :global(strong) {
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .contact-section {
+    background: var(--color-bg-light);
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+  }
+
+  .section-description {
+    text-align: center;
+    font-size: 1.125rem;
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .contact-info h3 {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    margin-bottom: 2rem;
+  }
+
+  .info-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+  }
+
+  .info-icon {
+    font-size: 1.5rem;
+  }
+
+  .info-item strong {
+    display: block;
+    color: var(--color-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .info-item p {
+    color: var(--color-text-light);
+    margin: 0;
+  }
+
+  .contact-form {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-secondary));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .other-services {
+    background: white;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .service-card {
+    background: var(--color-bg-light);
+    border-radius: 12px;
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    border-color: var(--color-accent);
+  }
+
+  .service-icon-small {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-secondary));
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-icon-small .icon {
+    font-size: 2rem;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .card-subtitle {
+    font-size: 1rem;
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .card-description {
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-link {
+    color: var(--color-accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .card-link:hover {
+    transform: translateX(5px);
+    display: inline-block;
+  }
+
+  @media (max-width: 768px) {
+    .service-title {
+      font-size: 2.5rem;
+    }
+
+    .service-subtitle {
+      font-size: 1.25rem;
+    }
+
+    .service-features {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-cta {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      width: 100%;
+    }
+  }
+</style>
