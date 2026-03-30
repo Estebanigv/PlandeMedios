@@ -7,6 +7,7 @@ author: "Plan de Medios"
 readTime: "6 min"
 featured: true
 tags: ["branding", "confianza", "experiencia del cliente"]
+image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=400&fit=crop&q=80"
 ---
 
 ## El contrato invisible entre marca y consumidor

@@ -20,7 +20,7 @@ export interface NavigationConfig {
 }
 
 export const navigationConfig: NavigationConfig = {
-  // Main navigation (Header)
+  // Main navigation (Header) — según sitemap propuesto
   main: [
     {
       name: "Inicio",
@@ -28,34 +28,24 @@ export const navigationConfig: NavigationConfig = {
       ariaLabel: "Ir a la sección de inicio"
     },
     {
-      name: "Servicios",
-      href: "#servicios",
-      ariaLabel: "Ver nuestros servicios"
-    },
-    {
       name: "Equipo",
       href: "#equipo",
       ariaLabel: "Conocer a nuestro equipo"
     },
     {
-      name: "Alianzas",
-      href: "#alianzas",
-      ariaLabel: "Ver nuestras alianzas estratégicas"
+      name: "Servicios",
+      href: "#servicios",
+      ariaLabel: "Ver nuestros servicios"
     },
     {
-      name: "Clientes",
-      href: "#clientes",
-      ariaLabel: "Ver nuestros clientes"
+      name: "Cifras",
+      href: "#cifras",
+      ariaLabel: "Ver nuestras cifras y clientes"
     },
     {
-      name: "Tendencias",
-      href: "#tendencias",
-      ariaLabel: "Explorar tendencias del mercado"
-    },
-    {
-      name: "Contacto",
-      href: "#contacto",
-      ariaLabel: "Contactar con nosotros"
+      name: "Noticias",
+      href: "#noticias",
+      ariaLabel: "Ver últimas noticias"
     }
   ],
 
@@ -63,16 +53,16 @@ export const navigationConfig: NavigationConfig = {
   footer: {
     quickLinks: [
       {
-        name: "Servicios",
-        href: "#servicios"
-      },
-      {
         name: "Equipo",
         href: "#equipo"
       },
       {
-        name: "Tendencias",
-        href: "#tendencias"
+        name: "Servicios",
+        href: "#servicios"
+      },
+      {
+        name: "Noticias",
+        href: "#noticias"
       },
       {
         name: "Contacto",
@@ -83,10 +73,6 @@ export const navigationConfig: NavigationConfig = {
       {
         name: "Tour Graphic",
         href: "#tour-graphic"
-      },
-      {
-        name: "Tour Motor",
-        href: "#tour-motor"
       },
       {
         name: "Tour Innovación",

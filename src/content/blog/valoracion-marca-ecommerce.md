@@ -6,6 +6,7 @@ publishDate: 2025-01-20
 author: "Plan de Medios"
 readTime: "7 min"
 tags: ["e-commerce", "branding", "comercio electrónico"]
+image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&q=80"
 ---
 
 ## El desafío del branding en e-commerce

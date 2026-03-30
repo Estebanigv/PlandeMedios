@@ -6,6 +6,7 @@ publishDate: 2025-01-22
 author: "Plan de Medios"
 readTime: "5 min"
 tags: ["podcasts", "audio marketing", "contenido"]
+image: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&h=400&fit=crop&q=80"
 ---
 
 ## La revolución del audio digital

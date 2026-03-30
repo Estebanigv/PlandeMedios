@@ -3,26 +3,19 @@ import { mainNav } from '@/data/navigation';
 import { siteConfig } from '@/data/site';
 ---
 
-<header class="header">
-  <nav class="nav container-custom">
-    <div class="nav-brand">
-      <a href="/" class="brand-link" aria-label={`Ir a ${siteConfig.name}`}>
-        <div class="logo-square">
-          <span class="logo-text">PM</span>
-        </div>
-      </a>
-    </div>
+<header class="header" id="site-header">
+  <nav class="nav">
+    <a href="/" class="brand" aria-label={`Ir a ${siteConfig.name}`}>
+      <div class="logo">
+        <span class="logo-letters">PM</span>
+      </div>
+      <span class="brand-name">Plan de Medios</span>
+    </a>
 
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-      <span class="hamburger"></span>
-      <span class="hamburger"></span>
-      <span class="hamburger"></span>
-    </button>
-
-    <div class="nav-wrapper">
-      <ul class="nav-menu" id="navMenu">
+    <div class="nav-center" id="navCenter">
+      <ul class="nav-menu">
         {mainNav.map(item => (
-          <li class="nav-item">
+          <li>
             <a
               href={item.href}
               class="nav-link"
@@ -35,13 +28,27 @@ import { siteConfig } from '@/data/site';
           </li>
         ))}
       </ul>
+    </div>
 
-      <a href="#contacto" class="btn-contact">
-        Contacto
+    <div class="nav-actions">
+      <a href="#contacto" class="btn-cta">
+        Agendar reunión
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
       </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
     </div>
   </nav>
 </header>
+
+<!-- Mobile overlay -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
 
 <style>
   .header {
@@ -49,206 +56,330 @@ import { siteConfig } from '@/data/site';
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgb(2 6 23 / 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     z-index: 1000;
-    transition: all 0.3s ease;
+    background: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
   }
 
   .nav {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem;
+    justify-content: space-between;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0.875rem 2rem;
   }
 
-  .nav-brand {
+  /* ── Brand ── */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
     z-index: 1001;
   }
 
-  .brand-link {
-    text-decoration: none;
-  }
-
-  /* Logo PM Square */
-  .logo-square {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, #14b8a6, #10b981);
-    border-radius: 8px;
+  .logo {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
     transition: all 0.3s ease;
   }
 
-  .logo-square:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(20, 184, 166, 0.4);
+  .brand:hover .logo {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.35);
   }
 
-  .logo-text {
-    font-size: 1.25rem;
+  .logo-letters {
+    font-size: 1rem;
     font-weight: 800;
     color: white;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
   }
 
-  .nav-toggle {
-    display: none;
-    flex-direction: column;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    z-index: 1001;
+  .brand-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.01em;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
   }
 
-  .hamburger {
-    width: 25px;
-    height: 2px;
-    background-color: var(--color-text);
-    margin: 3px 0;
-    transition: all 0.3s ease;
-    border-radius: 2px;
+  .brand:hover .brand-name {
+    opacity: 1;
   }
 
-  .nav-wrapper {
+  /* ── Nav Center ── */
+  .nav-center {
     display: flex;
     align-items: center;
-    gap: 2rem;
   }
 
   .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2.5rem;
+    gap: 0.25rem;
     margin: 0;
     padding: 0;
   }
 
-  .nav-item {
-    position: relative;
-  }
-
   .nav-link {
-    color: rgb(209 213 219); /* text-gray-300 */
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
     font-weight: 500;
-    font-size: 0.875rem;
-    padding: 0.5rem 0;
-    position: relative;
-    transition: color 0.3s ease;
-    letter-spacing: 0.025em;
+    font-size: 0.8125rem;
+    padding: 0.5rem 0.875rem;
+    border-radius: 8px;
     text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: all 0.2s ease;
+    position: relative;
   }
 
   .nav-link:hover {
     color: white;
+    background: rgba(255, 255, 255, 0.06);
   }
 
-  /* Contact Button */
-  .btn-contact {
-    padding: 0.625rem 1.5rem;
-    background-color: black;
+  .nav-link.active {
+    color: white;
+    background: rgba(20, 184, 166, 0.12);
+  }
+
+  /* ── Actions ── */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1001;
+  }
+
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5625rem 1.25rem;
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
     color: white;
     font-weight: 600;
-    font-size: 0.875rem;
-    border-radius: 6px;
+    font-size: 0.8125rem;
+    border-radius: 9999px;
     text-decoration: none;
-    transition: all 0.3s ease;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.01em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(20, 184, 166, 0.25);
   }
 
-  .btn-contact:hover {
-    background-color: rgb(31 41 55); /* gray-800 */
+  .btn-cta:hover {
     transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(20, 184, 166, 0.4);
+    filter: brightness(1.08);
   }
 
-  /* Mobile Styles */
+  .btn-cta svg {
+    transition: transform 0.3s ease;
+  }
+
+  .btn-cta:hover svg {
+    transform: translateX(2px);
+  }
+
+  /* ── Toggle ── */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .bar {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+  }
+
+  .nav-toggle.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(4.5px, 4.5px);
+  }
+  .nav-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .nav-toggle.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(4.5px, -4.5px);
+  }
+
+  /* ── Mobile Overlay ── */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .mobile-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ── Mobile ── */
   @media (max-width: 768px) {
+    .nav {
+      padding: 0.875rem 1.25rem;
+    }
+
+    .brand-name {
+      display: none;
+    }
+
     .nav-toggle {
       display: flex;
     }
 
-    .nav-wrapper {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 70%;
-      height: 100vh;
-      background-color: rgb(15 23 42 / 0.98);
-      backdrop-filter: blur(16px);
-      flex-direction: column;
-      padding: 5rem 2rem 2rem;
-      gap: 2rem;
-      transition: right 0.3s ease;
-      border-left: 1px solid rgba(255, 255, 255, 0.05);
+    .mobile-overlay {
+      display: block;
     }
 
-    .nav-wrapper.active {
+    .btn-cta {
+      display: none;
+    }
+
+    .nav-center {
+      position: fixed;
+      top: 0;
       right: 0;
+      width: min(320px, 85vw);
+      height: 100dvh;
+      background: rgba(2, 6, 23, 0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      flex-direction: column;
+      padding: 6rem 2rem 2rem;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-center.active {
+      transform: translateX(0);
     }
 
     .nav-menu {
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 0.25rem;
+      width: 100%;
     }
 
     .nav-link {
-      font-size: 1.1rem;
-      padding: 0.75rem 0;
+      font-size: 1rem;
+      padding: 0.875rem 1rem;
+      border-radius: 12px;
     }
 
-    .btn-contact {
+    /* Show CTA in mobile menu */
+    .nav-center::after {
+      content: 'Agendar reunión';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: auto;
+      padding: 0.875rem;
+      background: linear-gradient(135deg, #14b8a6, #0d9488);
+      color: white;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      border-radius: 12px;
       width: 100%;
-      text-align: center;
-      padding: 0.875rem 1.5rem;
+      cursor: pointer;
     }
+  }
 
-    .nav-toggle.active .hamburger:nth-child(1) {
-      transform: rotate(45deg) translate(8px, 8px);
-    }
-
-    .nav-toggle.active .hamburger:nth-child(2) {
-      opacity: 0;
-    }
-
-    .nav-toggle.active .hamburger:nth-child(3) {
-      transform: rotate(-45deg) translate(8px, -8px);
+  @media (max-width: 480px) {
+    .nav {
+      padding: 0.75rem 1rem;
     }
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const navToggle = document.getElementById('navToggle');
-    const navWrapper = document.querySelector('.nav-wrapper');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const btnContact = document.querySelector('.btn-contact');
+    const toggle = document.getElementById('navToggle');
+    const navCenter = document.getElementById('navCenter');
+    const overlay = document.getElementById('mobileOverlay');
+    const links = document.querySelectorAll('.nav-link');
 
-    navToggle?.addEventListener('click', () => {
-      navToggle.classList.toggle('active');
-      navWrapper?.classList.toggle('active');
-    });
+    // Mobile toggle
+    const closeMenu = () => {
+      toggle?.classList.remove('active');
+      navCenter?.classList.remove('active');
+      overlay?.classList.remove('active');
+      document.body.style.overflow = '';
+    };
 
-    // Close menu when clicking any navigation link
-    [...navLinks, btnContact].forEach(link => {
-      link?.addEventListener('click', () => {
-        navToggle?.classList.remove('active');
-        navWrapper?.classList.remove('active');
-      });
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest('.nav') && navWrapper?.classList.contains('active')) {
-        navToggle?.classList.remove('active');
-        navWrapper?.classList.remove('active');
+    toggle?.addEventListener('click', () => {
+      const isOpen = navCenter?.classList.contains('active');
+      if (isOpen) {
+        closeMenu();
+      } else {
+        toggle.classList.add('active');
+        navCenter?.classList.add('active');
+        overlay?.classList.add('active');
+        document.body.style.overflow = 'hidden';
       }
     });
+
+    overlay?.addEventListener('click', closeMenu);
+    links.forEach(link => link.addEventListener('click', closeMenu));
+
+    // Mobile CTA click → scroll to contacto
+    navCenter?.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target === navCenter && window.getComputedStyle(navCenter).position === 'fixed') return;
+      // Handle the ::after pseudo-element area click
+    });
+
+    // Active link on scroll
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const observerOpts = { rootMargin: '-20% 0px -70% 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          links.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    }, observerOpts);
+
+    sections.forEach(section => observer.observe(section));
   });
 </script>

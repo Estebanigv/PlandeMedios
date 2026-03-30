@@ -6,6 +6,7 @@ publishDate: 2025-01-08
 author: "Plan de Medios"
 readTime: "6 min"
 tags: ["herramientas digitales", "visibilidad", "SEO"]
+image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&q=80"
 ---
 
 ## El arsenal digital del marketing moderno

@@ -7,6 +7,7 @@ author: "Plan de Medios"
 readTime: "5 min"
 featured: true
 tags: ["marketing digital", "branding", "confianza"]
+image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=400&fit=crop&q=80"
 ---
 
 ## La importancia de la confianza en el entorno digital

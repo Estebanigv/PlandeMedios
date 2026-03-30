@@ -7,6 +7,7 @@ author: "Plan de Medios"
 readTime: "7 min"
 featured: true
 tags: ["metaverso", "innovación", "realidad virtual"]
+image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&h=400&fit=crop&q=80"
 ---
 
 ## El amanecer de una nueva era digital

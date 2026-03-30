@@ -6,6 +6,7 @@ publishDate: 2025-01-25
 author: "Plan de Medios"
 readTime: "6 min"
 tags: ["video marketing", "B2B", "ventas"]
+image: "https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=600&h=400&fit=crop&q=80"
 ---
 
 ## El poder del video en el contexto B2B

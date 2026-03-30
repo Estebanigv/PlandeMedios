@@ -6,6 +6,7 @@ publishDate: 2025-01-18
 author: "Plan de Medios"
 readTime: "4 min"
 tags: ["memes", "cultura digital", "contenido viral"]
+image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop&q=80"
 ---
 
 ## El lenguaje de la nueva generación

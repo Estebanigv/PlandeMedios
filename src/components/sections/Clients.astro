@@ -1,188 +1,366 @@
 ---
 /**
- * Clients Section
- * Displays client success stories with testimonials and metrics
+ * Cifras Section
+ * Key metrics with animated counters
  */
 
-import { Quote, TrendingUp, Users, Award } from 'lucide-astro';
-
-const clients = [
-  {
-    name: "TechNova Solutions",
-    category: "Tecnología SaaS",
-    logo: "TN",
-    testimonial: "Plan de Medios transformó nuestra estrategia de contenido. En 6 meses aumentamos nuestro tráfico orgánico en 340% y generamos 120+ leads calificados mensuales.",
-    results: "+340% tráfico orgánico",
-    industry: "Software B2B",
-    project: "Estrategia de contenido integral + SEO técnico",
-    duration: "6 meses"
-  },
-  {
-    name: "AutoElite Chile",
-    category: "Automotriz",
-    logo: "AE",
-    testimonial: "Tour Motor nos posicionó como referentes en el sector premium. Las producciones audiovisuales superaron 2M de visualizaciones y nuestras ventas crecieron 85%.",
-    results: "2M+ visualizaciones",
-    industry: "Retail Automotor",
-    project: "Contenido audiovisual + Distribución multicanal",
-    duration: "12 meses"
-  },
-  {
-    name: "GreenTech Energía",
-    category: "Energías Renovables",
-    logo: "GT",
-    testimonial: "Tour Innovación amplificó nuestra voz en el ecosistema de innovación. Logramos 15 apariciones en medios top y cerramos 3 rondas de inversión exitosas.",
-    results: "15 menciones en medios",
-    industry: "Cleantech",
-    project: "PR Digital + Producción editorial especializada",
-    duration: "8 meses"
-  }
-];
-
 const stats = [
-  { number: "120+", label: "Clientes Activos", description: "Empresas que confían en nosotros" },
-  { number: "98%", label: "Retención", description: "Clientes que renuevan anualmente" },
-  { number: "450+", label: "Proyectos", description: "Campañas ejecutadas con éxito" },
-  { number: "15+", label: "Industrias", description: "Sectores diversos atendidos" }
-];
-
-const industries = [
-  "Tecnología & SaaS",
-  "Automotriz",
-  "Energías Renovables",
-  "Fintech & Banca",
-  "E-commerce & Retail",
-  "Salud & Biotech",
-  "Educación & EdTech",
-  "Inmobiliario",
-  "Alimentación",
-  "Telecomunicaciones",
-  "Construcción",
-  "Turismo & Hospitalidad"
+  { value: 250, suffix: "+", label: "Empresas", desc: "han confiado en nosotros" },
+  { value: 98, suffix: "%", label: "Retención", desc: "clientes vuelven a elegirnos" },
+  { value: 200, suffix: "+", label: "Especiales", desc: "desarrollados con éxito" },
+  { value: 15, suffix: "+", label: "Industrias", desc: "de diversos sectores" }
 ];
 ---
 
-<section id="clientes" class="relative py-32 overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-  <!-- Background elements -->
-  <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
-  <div class="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-teal-500/10 to-emerald-500/10 rounded-full blur-3xl"></div>
-  <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-teal-500/10 rounded-full blur-3xl"></div>
-
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="cifras" class="cifras">
+  <div class="cifras-inner">
     <!-- Header -->
-    <div class="text-center mb-20">
-      <div class="flex items-center justify-center gap-3 mb-6">
-        <div class="h-px w-12 bg-gradient-to-r from-transparent via-teal-400 to-transparent"></div>
-        <span class="text-sm uppercase tracking-wider text-teal-400">Casos de Éxito</span>
-        <div class="h-px w-12 bg-gradient-to-r from-transparent via-teal-400 to-transparent"></div>
-      </div>
-      <h2 class="text-5xl md:text-6xl mb-6 text-white tracking-tight font-bold">
-        Resultados que Hablan por Sí Mismos
-      </h2>
-      <p class="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-        Empresas líderes que han transformado su presencia digital y amplificado
-        su mensaje con nuestras plataformas especializadas.
-      </p>
+    <div class="cifras-header">
+      <span class="decorator">Cifras</span>
+      <h2 class="cifras-title">Números que respaldan<br/>nuestra trayectoria</h2>
+      <p class="cifras-desc">Más de dos décadas transformando la comunicación de marca en Chile.</p>
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+    <div class="stats-grid">
       {stats.map((stat) => (
-        <div class="text-center p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:border-teal-500/50 transition-all">
-          <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent mb-2">
-            {stat.number}
+        <div class="stat-card" data-target={stat.value} data-suffix={stat.suffix}>
+          <div class="stat-number-wrap">
+            <span class="stat-number" data-value={stat.value}>0</span>
+            <span class="stat-suffix">{stat.suffix}</span>
           </div>
-          <div class="text-white font-semibold mb-1">{stat.label}</div>
-          <div class="text-sm text-gray-400">{stat.description}</div>
-        </div>
-      ))}
-    </div>
-
-    <!-- Client Testimonials -->
-    <div class="grid md:grid-cols-3 gap-8 mb-20">
-      {clients.map((client) => (
-        <div class="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:border-teal-500/50 hover:bg-white/10 transition-all">
-          <!-- Logo/Initial -->
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-16 h-16 bg-gradient-to-br from-teal-600 to-emerald-700 rounded-xl flex items-center justify-center shadow-lg">
-              <span class="text-white font-bold text-xl">{client.logo}</span>
-            </div>
-            <div>
-              <h3 class="text-white font-bold text-lg">{client.name}</h3>
-              <p class="text-teal-400 text-sm">{client.category}</p>
-            </div>
-          </div>
-
-          <!-- Quote Icon -->
-          <Quote class="text-teal-400/20 mb-4" size={40} />
-
-          <!-- Testimonial -->
-          <p class="text-gray-300 leading-relaxed mb-6 italic">
-            "{client.testimonial}"
-          </p>
-
-          <!-- Results Badge -->
-          <div class="inline-flex items-center gap-2 px-4 py-2 bg-teal-500/10 border border-teal-500/30 rounded-full mb-6">
-            <TrendingUp class="text-teal-400" size={16} />
-            <span class="text-teal-300 text-sm font-semibold">{client.results}</span>
-          </div>
-
-          <!-- Project Details -->
-          <div class="space-y-2 pt-6 border-t border-white/10">
-            <div class="flex items-start gap-2">
-              <span class="text-gray-500 text-sm min-w-[80px]">Industria:</span>
-              <span class="text-gray-300 text-sm">{client.industry}</span>
-            </div>
-            <div class="flex items-start gap-2">
-              <span class="text-gray-500 text-sm min-w-[80px]">Proyecto:</span>
-              <span class="text-gray-300 text-sm">{client.project}</span>
-            </div>
-            <div class="flex items-start gap-2">
-              <span class="text-gray-500 text-sm min-w-[80px]">Duración:</span>
-              <span class="text-gray-300 text-sm">{client.duration}</span>
-            </div>
+          <div class="stat-label">{stat.label}</div>
+          <div class="stat-desc">{stat.desc}</div>
+          <div class="stat-bar">
+            <div class="stat-bar-fill"></div>
           </div>
         </div>
       ))}
     </div>
 
-    <!-- Industries Section -->
-    <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12">
-      <div class="flex items-center gap-3 mb-8">
-        <Users class="text-teal-400" size={32} />
-        <h3 class="text-2xl md:text-3xl font-bold text-white">Industrias que Atendemos</h3>
-      </div>
-
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {industries.map((industry) => (
-          <div class="flex items-center gap-2 text-gray-300 hover:text-teal-400 transition-colors">
-            <div class="w-1.5 h-1.5 bg-teal-400 rounded-full"></div>
-            <span class="text-sm">{industry}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    <!-- CTA -->
-    <div class="mt-16 text-center">
-      <div class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-4">
-        <Award class="text-teal-400" size={20} />
-        <span class="text-white font-medium">¿Quieres ser nuestro próximo caso de éxito?</span>
-      </div>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
-        <button
-          onclick="document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })"
-          class="px-8 py-4 bg-gradient-to-r from-teal-600 to-emerald-700 hover:from-teal-700 hover:to-emerald-800 text-white rounded-xl shadow-lg hover:shadow-xl transition-all font-semibold"
-        >
-          Agenda una Reunión Estratégica
-        </button>
-        <button
-          onclick="document.getElementById('plataformas')?.scrollIntoView({ behavior: 'smooth' })"
-          class="px-8 py-4 border-2 border-white/20 hover:border-teal-500/50 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-all font-semibold"
-        >
-          Conoce Nuestras Plataformas
-        </button>
+    <!-- Trust logos text -->
+    <div class="trust-footer">
+      <p class="trust-text">Alianzas con medios líderes</p>
+      <div class="trust-logos">
+        <span class="trust-logo">CNN Chile</span>
+        <span class="trust-dot"></span>
+        <span class="trust-logo">T13 en Vivo</span>
+        <span class="trust-dot"></span>
+        <span class="trust-logo">Canal 13C</span>
+        <span class="trust-dot"></span>
+        <span class="trust-logo">Mega 2</span>
+        <span class="trust-dot"></span>
+        <span class="trust-logo">Emol TV</span>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .cifras {
+    position: relative;
+    background: linear-gradient(170deg, #020617 0%, #0a1628 50%, #020617 100%);
+    padding: 7rem 0;
+    overflow: hidden;
+  }
+
+  .cifras::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 800px 600px at 30% 20%, rgba(20, 184, 166, 0.06), transparent),
+      radial-gradient(ellipse 600px 400px at 70% 80%, rgba(16, 185, 129, 0.04), transparent);
+    pointer-events: none;
+  }
+
+  .cifras-inner {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ── Header ── */
+  .cifras-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .decorator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #2dd4bf;
+    margin-bottom: 1rem;
+  }
+
+  .decorator::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #14b8a6;
+  }
+
+  .cifras-title {
+    font-family: var(--font-heading);
+    font-size: 2.75rem;
+    font-weight: 400;
+    line-height: 1.1;
+    color: #f1f5f9;
+    letter-spacing: -0.01em;
+    margin: 0 0 1rem;
+  }
+
+  .cifras-desc {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #64748b;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  /* ── Stats Grid ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .stat-card {
+    text-align: center;
+    padding: 2.5rem 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card:hover {
+    background: rgba(20, 184, 166, 0.05);
+    border-color: rgba(20, 184, 166, 0.2);
+    transform: translateY(-4px);
+  }
+
+  .stat-card:hover .stat-bar-fill {
+    width: 100%;
+  }
+
+  .stat-number-wrap {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-number {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, #2dd4bf, #14b8a6, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+  }
+
+  .stat-suffix {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #2dd4bf, #14b8a6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.01em;
+  }
+
+  .stat-desc {
+    font-size: 0.75rem;
+    color: #64748b;
+    line-height: 1.4;
+  }
+
+  .stat-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .stat-bar-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #14b8a6, #2dd4bf);
+    border-radius: 0 3px 3px 0;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ── Trust Footer ── */
+  .trust-footer {
+    text-align: center;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .trust-text {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #475569;
+    margin-bottom: 1.25rem;
+  }
+
+  .trust-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .trust-logo {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+  }
+
+  .trust-logo:hover {
+    color: #2dd4bf;
+  }
+
+  .trust-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #334155;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .cifras-title {
+      font-size: 2.5rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cifras {
+      padding: 5rem 0;
+    }
+
+    .cifras-inner {
+      padding: 0 1.25rem;
+    }
+
+    .cifras-title {
+      font-size: 2.125rem;
+    }
+
+    .stat-card {
+      padding: 2rem 1.25rem 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 2.75rem;
+    }
+
+    .stat-suffix {
+      font-size: 1.5rem;
+    }
+
+    .trust-logos {
+      gap: 0.75rem;
+    }
+
+    .trust-logo {
+      font-size: 0.8125rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cifras-title {
+      font-size: 1.75rem;
+    }
+
+    .stats-grid {
+      gap: 0.75rem;
+    }
+
+    .stat-number {
+      font-size: 2.25rem;
+    }
+  }
+</style>
+
+<script>
+  // Animated counter on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      const cards = entry.target.querySelectorAll('.stat-card');
+      cards.forEach((card, i) => {
+        const numEl = card.querySelector('.stat-number') as HTMLElement;
+        const target = parseInt(numEl?.dataset.value || '0');
+        if (!numEl || numEl.dataset.animated === 'true') return;
+        numEl.dataset.animated = 'true';
+
+        // Stagger animation
+        setTimeout(() => {
+          const duration = 2000;
+          const start = performance.now();
+
+          const animate = (now: number) => {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            numEl.textContent = Math.floor(eased * target).toString();
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              numEl.textContent = target.toString();
+            }
+          };
+
+          requestAnimationFrame(animate);
+
+          // Animate bar fill
+          const bar = card.querySelector('.stat-bar-fill') as HTMLElement;
+          if (bar) bar.style.width = '100%';
+        }, i * 200);
+      });
+
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.3 });
+
+  const grid = document.querySelector('.stats-grid');
+  if (grid) observer.observe(grid);
+</script>

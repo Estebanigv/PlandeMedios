@@ -6,6 +6,7 @@ publishDate: 2025-01-15
 author: "Plan de Medios"
 readTime: "5 min"
 tags: ["ROI", "eficiencia", "inversión publicitaria"]
+image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&q=80"
 ---
 
 ## Maximizando cada peso invertido
