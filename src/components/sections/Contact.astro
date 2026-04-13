@@ -5,7 +5,7 @@
  */
 
 import { siteConfig } from '@/data/site';
-import { Mail, Phone, MapPin, Send } from 'lucide-astro';
+import { Mail, Phone, Send } from 'lucide-astro';
 ---
 
 <section id="contacto" class="relative py-32 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
@@ -113,7 +113,7 @@ import { Mail, Phone, MapPin, Send } from 'lucide-astro';
         <!-- WhatsApp Button -->
         <div class="mt-8">
           <a
-            href="https://wa.me/56912345678?text=Hola%2C%20me%20gustaría%20conocer%20más%20sobre%20sus%20servicios"
+            href="https://wa.me/56977771499?text=Hola%2C%20me%20gustaría%20conocer%20más%20sobre%20sus%20servicios"
             target="_blank"
             rel="noopener noreferrer"
             class="block"
@@ -138,52 +138,17 @@ import { Mail, Phone, MapPin, Send } from 'lucide-astro';
             </div>
             <div>
               <h4 class="mb-2 text-white font-semibold">Email</h4>
-              <p class="text-gray-400">contacto@plandemedios.cl</p>
-              <p class="text-gray-400">ventas@plandemedios.cl</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-4 mb-6">
-            <div class="w-12 h-12 bg-gradient-to-br from-teal-600 to-emerald-700 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg">
-              <Phone class="text-white" size={20} />
-            </div>
-            <div>
-              <h4 class="mb-2 text-white font-semibold">Teléfono</h4>
-              <p class="text-gray-400">+56 2 1234 5678</p>
-              <p class="text-gray-400">+56 9 8765 4321</p>
+              <a href="mailto:contacto@plandemedios.cl" class="text-gray-400 hover:text-teal-400 transition-colors block">contacto@plandemedios.cl</a>
             </div>
           </div>
 
           <div class="flex items-start gap-4">
             <div class="w-12 h-12 bg-gradient-to-br from-teal-600 to-emerald-700 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg">
-              <MapPin class="text-white" size={20} />
+              <Phone class="text-white" size={20} />
             </div>
             <div>
-              <h4 class="mb-2 text-white font-semibold">Oficina</h4>
-              <p class="text-gray-400">
-                Av. Providencia 1234, Of. 567<br />
-                Providencia, Santiago<br />
-                Chile
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Hours -->
-        <div class="border border-white/10 bg-white/5 backdrop-blur-sm shadow-xl rounded-xl p-8">
-          <h4 class="mb-4 text-white font-semibold">Horarios de Atención</h4>
-          <div class="space-y-2 text-gray-400 text-sm">
-            <div class="flex justify-between">
-              <span>Lunes - Viernes:</span>
-              <span>9:00 - 18:00</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Sábado:</span>
-              <span>10:00 - 14:00</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Domingo:</span>
-              <span>Cerrado</span>
+              <h4 class="mb-2 text-white font-semibold">Teléfono</h4>
+              <a href="tel:+56977771499" class="text-gray-400 hover:text-teal-400 transition-colors block">+56 9 7777 1499</a>
             </div>
           </div>
         </div>

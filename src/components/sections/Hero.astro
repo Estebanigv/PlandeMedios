@@ -29,6 +29,12 @@ import PlatformCardWithImage from '@/components/features/PlatformCardWithImage.a
           Creamos contenido audiovisual y editorial en alianza con medios de comunicación. Estrategia, producción y distribución en un solo equipo.
         </p>
 
+        <ul class="hero-bullets">
+          <li>Generamos contenidos en colaboración con medios.</li>
+          <li>Desarrollamos formatos creativos: audiovisuales, editoriales y publicitarios.</li>
+          <li>Unimos estrategia, producción y distribución.</li>
+        </ul>
+
         <div class="hero-ctas">
           <a href="#contacto" class="cta-primary">
             Agendar reunión
@@ -77,7 +83,7 @@ import PlatformCardWithImage from '@/components/features/PlatformCardWithImage.a
           platform="innovation"
           badge="TOUR INNOVACIÓN"
           title="Tour Innovación"
-          subtitle="Contenidos audiovisuales y editoriales para difundir innovación en alianza con TV Paga y EMOL"
+          subtitle="Creamos contenidos audiovisuales y editoriales para difundir innovación en alianza con canales de TV Paga y EMOL TV."
           imageSrc="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop&q=80"
           imageAlt="Innovación y tecnología"
         />
@@ -86,7 +92,7 @@ import PlatformCardWithImage from '@/components/features/PlatformCardWithImage.a
           platform="graphic"
           badge="TOUR GRAPHIC"
           title="Tour Graphic"
-          subtitle="Publicidad digital en grandes formatos. Diseño, distribución e instalación a nivel nacional"
+          subtitle="Realizamos publicidad digital en grandes formatos. Diseño, distribución e instalación a nivel nacional."
           imageSrc="https://images.unsplash.com/photo-1551818255-e6e10975bc17?w=800&h=600&fit=crop&q=80"
           imageAlt="Publicidad digital en grandes formatos"
         />
@@ -236,9 +242,38 @@ import PlatformCardWithImage from '@/components/features/PlatformCardWithImage.a
     font-size: 1rem;
     line-height: 1.75;
     color: #94a3b8;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.25rem;
     max-width: 460px;
     letter-spacing: 0.005em;
+  }
+
+  /* ── Bullet List ── */
+  .hero-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .hero-bullets li {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #94a3b8;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .hero-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #2dd4bf;
   }
 
   /* ── CTAs ── */

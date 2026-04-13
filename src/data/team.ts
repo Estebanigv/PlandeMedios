@@ -36,7 +36,7 @@ export const teamConfig: TeamConfig = {
   // Team members
   members: [
     {
-      name: "José Andraca",
+      name: "José Luis Andraca",
       role: "Gerente General",
       bio: "Líder con amplia trayectoria en medios y comunicación de marca.",
       image: "/images/Equipo/JoseAndraca.jpeg",
@@ -45,21 +45,20 @@ export const teamConfig: TeamConfig = {
       }
     },
     {
+      name: "Romina Andraca",
+      role: "Administración y Finanzas",
+      bio: "Gestión administrativa y financiera de la empresa.",
+      social: {
+        email: "romina.andraca@plandemedios.cl"
+      }
+    },
+    {
       name: "Hortencia Fritz",
-      role: "Editora General - Tour Innovación",
+      role: "Editora General",
       bio: "Especialista en contenido editorial y gestión de proyectos de innovación.",
       image: "/images/Equipo/HortenciaFritz.jpeg",
       social: {
         email: "hortencia.fritz@plandemedios.cl"
-      }
-    },
-    {
-      name: "Rodrigo Castillo",
-      role: "Editor General - Tour Motor",
-      bio: "Experto en contenido automotriz y medios especializados.",
-      image: "/images/Equipo/RodrigoCastillo.jpeg",
-      social: {
-        email: "rodrigo.castillo@plandemedios.cl"
       }
     },
     {
@@ -78,6 +77,30 @@ export const teamConfig: TeamConfig = {
       image: "/images/Equipo/Jaime San Martín.jpeg",
       social: {
         email: "jaime.sanmartin@plandemedios.cl"
+      }
+    },
+    {
+      name: "Viviana Carrillo",
+      role: "Diseño y Redes Sociales",
+      bio: "Especialista en diseño visual y gestión de redes sociales.",
+      social: {
+        email: "viviana.carrillo@plandemedios.cl"
+      }
+    },
+    {
+      name: "Sandra Andraca",
+      role: "Marketing de Contenidos",
+      bio: "Creación y gestión de estrategias de contenido para marcas.",
+      social: {
+        email: "Sandra.andraca@plandemedios.cl"
+      }
+    },
+    {
+      name: "Verónica Gómez",
+      role: "Marketing de Contenidos",
+      bio: "Especialista en marketing de contenidos y estrategia digital.",
+      social: {
+        email: "veronica.gomez@plandemedios.cl"
       }
     },
     {
