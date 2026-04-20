@@ -284,4 +284,27 @@ const {
       max-width: 100%;
     }
   }
+
+  @media (max-width: 480px) {
+    .platform-card-large,
+    .platform-card-medium {
+      min-height: 200px;
+    }
+
+    .platform-title {
+      font-size: 1.25rem;
+    }
+
+    .platform-subtitle {
+      font-size: 0.8125rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .platform-card-content {
+      padding: 1rem;
+    }
+  }
 </style>

@@ -243,7 +243,8 @@ const bottomRow = teamMembers.slice(5);
   /* ── Responsive ── */
   @media (max-width: 1024px) {
     .team-row-5 {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      justify-content: center;
       gap: 1rem;
     }
 
@@ -266,7 +267,8 @@ const bottomRow = teamMembers.slice(5);
     }
 
     .team-row-5 {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
     }
 
     .member {
@@ -294,8 +296,8 @@ const bottomRow = teamMembers.slice(5);
     }
 
     .member-photo {
-      width: 72px;
-      height: 72px;
+      width: 80px;
+      height: 80px;
       margin-bottom: 1rem;
     }
 

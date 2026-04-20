@@ -85,6 +85,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    overflow-x: hidden;
   }
 
   body {
@@ -93,6 +94,7 @@
     line-height: 1.65;
     font-size: var(--font-size-base);
     letter-spacing: -0.006em;
+    overflow-x: hidden;
   }
 
   h1, h2, h3 {

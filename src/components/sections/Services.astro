@@ -455,11 +455,28 @@ const graphicServices = [
     .svc {
       padding: 1.5rem;
     }
+
+    .platform-header {
+      margin-bottom: 2rem;
+    }
+
+    .graphic-video-wrapper {
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
   }
 
   @media (max-width: 480px) {
     .services-title {
       font-size: 1.75rem;
+    }
+
+    .platform-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .services-title br {
+      display: none;
     }
   }
 
@@ -520,6 +537,7 @@ const graphicServices = [
     display: flex;
     gap: 0.5rem;
     z-index: 10;
+    pointer-events: auto;
   }
 
   .video-btn {
