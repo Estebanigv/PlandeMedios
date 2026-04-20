@@ -6,7 +6,8 @@ import { siteConfig } from '@/data/site';
 <header class="header" id="site-header">
   <nav class="nav">
     <a href="/" class="brand" aria-label={`Ir a ${siteConfig.name}`}>
-      <img src="/logo-plandemedios.png" alt="Plan de Medios" class="brand-logo" />
+      <img src="/isotipo.gif" alt="" class="brand-isotipo" />
+      <span class="brand-text">Plan de Medios</span>
     </a>
 
     <div class="nav-center" id="navCenter">
@@ -92,20 +93,29 @@ import { siteConfig } from '@/data/site';
   .brand {
     display: flex;
     align-items: center;
+    gap: 0.625rem;
     text-decoration: none;
     z-index: 1001;
+    transition: opacity 0.3s ease;
   }
 
-  .brand-logo {
-    height: 40px;
+  .brand:hover {
+    opacity: 0.85;
+  }
+
+  .brand-isotipo {
+    height: 38px;
     width: auto;
     object-fit: contain;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    flex-shrink: 0;
   }
 
-  .brand:hover .brand-logo {
-    opacity: 0.85;
-    transform: scale(1.03);
+  .brand-text {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+    line-height: 1;
   }
 
   /* ── Nav Center ── */
