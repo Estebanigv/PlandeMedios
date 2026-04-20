@@ -48,6 +48,7 @@ export const teamConfig: TeamConfig = {
       name: "Romina Andraca",
       role: "Administración y Finanzas",
       bio: "Gestión administrativa y financiera de la empresa.",
+      image: "/images/Equipo/RominaAndraca.jpeg",
       social: {
         email: "romina.andraca@plandemedios.cl"
       }
@@ -83,6 +84,7 @@ export const teamConfig: TeamConfig = {
       name: "Viviana Carrillo",
       role: "Diseño y Redes Sociales",
       bio: "Especialista en diseño visual y gestión de redes sociales.",
+      image: "/images/Equipo/VivianaCarrillo.png",
       social: {
         email: "viviana.carrillo@plandemedios.cl"
       }
@@ -91,6 +93,7 @@ export const teamConfig: TeamConfig = {
       name: "Sandra Andraca",
       role: "Marketing de Contenidos",
       bio: "Creación y gestión de estrategias de contenido para marcas.",
+      image: "/images/Equipo/SandraAndraca.png",
       social: {
         email: "Sandra.andraca@plandemedios.cl"
       }
@@ -99,6 +102,7 @@ export const teamConfig: TeamConfig = {
       name: "Verónica Gómez",
       role: "Marketing de Contenidos",
       bio: "Especialista en marketing de contenidos y estrategia digital.",
+      image: "/images/Equipo/VeronicaGomez.jpeg",
       social: {
         email: "veronica.gomez@plandemedios.cl"
       }
