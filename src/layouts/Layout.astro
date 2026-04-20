@@ -35,9 +35,9 @@ const {
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Favicons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/svg+xml" href="/favicon-improved.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/logo.svg" />
+    <link rel="icon" type="image/gif" href="/isotipo.gif" />
+    <link rel="icon" type="image/png" href="/logo-plandemedios.png" />
+    <link rel="apple-touch-icon" href="/logo-plandemedios.png" />
 
     <!-- Google Analytics - Reemplazar con tu ID real -->
     <!--
@@ -52,11 +52,14 @@ const {
 
     <title>{title}</title>
 
-    <!-- Anti-flash: apply theme before first paint -->
+    <!-- Anti-flash: apply theme before first paint (respeta preferencia del sistema) -->
     <script is:inline>
       (function() {
-        var t = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', t);
+        var saved = localStorage.getItem('theme');
+        var theme = saved
+          ? saved
+          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>
   </head>
