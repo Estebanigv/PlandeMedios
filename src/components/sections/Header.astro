@@ -6,10 +6,7 @@ import { siteConfig } from '@/data/site';
 <header class="header" id="site-header">
   <nav class="nav">
     <a href="/" class="brand" aria-label={`Ir a ${siteConfig.name}`}>
-      <div class="logo">
-        <span class="logo-letters">PM</span>
-      </div>
-      <span class="brand-name">Plan de Medios</span>
+      <img src="/logo-plandemedios.png" alt="Plan de Medios" class="brand-logo" />
     </a>
 
     <div class="nav-center" id="navCenter">
@@ -95,45 +92,20 @@ import { siteConfig } from '@/data/site';
   .brand {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
     text-decoration: none;
     z-index: 1001;
   }
 
-  .logo {
-    width: 40px;
+  .brand-logo {
     height: 40px;
-    background: linear-gradient(135deg, #14b8a6, #0d9488);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
+    width: auto;
+    object-fit: contain;
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
-  .brand:hover .logo {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(20, 184, 166, 0.35);
-  }
-
-  .logo-letters {
-    font-size: 1rem;
-    font-weight: 800;
-    color: white;
-    letter-spacing: -0.03em;
-  }
-
-  .brand-name {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: white;
-    letter-spacing: -0.01em;
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
-  }
-
-  .brand:hover .brand-name {
-    opacity: 1;
+  .brand:hover .brand-logo {
+    opacity: 0.85;
+    transform: scale(1.03);
   }
 
   /* ── Nav Center ── */
@@ -274,10 +246,6 @@ import { siteConfig } from '@/data/site';
   @media (max-width: 768px) {
     .nav {
       padding: 0.875rem 1.25rem;
-    }
-
-    .brand-name {
-      display: none;
     }
 
     .nav-toggle {
