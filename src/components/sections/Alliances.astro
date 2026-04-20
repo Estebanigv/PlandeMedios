@@ -1,71 +1,106 @@
 ---
 /**
- * Alliances Section
- * Displays strategic alliances and partner platforms
+ * Alliances Section — Medios aliados de Plan de Medios
+ * CNN Chile, T13 en Vivo, Canal 13C, Emol TV
  */
 
 const alliances = [
-  { name: "Google", color: "text-gray-800" },
-  { name: "Meta", color: "text-blue-600" },
-  { name: "Amazon AWS", color: "text-orange-600" },
-  { name: "Microsoft", color: "text-blue-700" },
-  { name: "Adobe", color: "text-red-600" },
-  { name: "Salesforce", color: "text-blue-500" },
-  { name: "HubSpot", color: "text-orange-500" },
-  { name: "LinkedIn", color: "text-blue-700" },
-  { name: "Twitter", color: "text-blue-400" },
-  { name: "YouTube", color: "text-red-600" },
-  { name: "Spotify", color: "text-green-600" },
-  { name: "TikTok", color: "text-black" }
+  { name: "CNN Chile",   logo: "/images/alianzas/cnn-chile.png"  },
+  { name: "T13 en Vivo", logo: "/images/alianzas/t13.png"        },
+  { name: "Canal 13C",   logo: "/images/alianzas/canal-13c.png"  },
+  { name: "Emol TV",     logo: "/images/alianzas/emol-tv.png"    },
 ];
 ---
 
-<section id="alianzas" class="py-24 bg-white border-t border-gray-100" aria-label="Alianzas estratégicas de Plan de Medios">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Header -->
-    <div class="text-center mb-16">
-      <div class="inline-block mb-4 px-4 py-2 bg-black text-white rounded-full text-sm font-medium">
-        Alianzas Estratégicas
-      </div>
-      <h2 class="text-5xl md:text-6xl mb-6 text-gray-900 tracking-tight font-bold">
-        Trabajamos con las Mejores Plataformas
-      </h2>
-      <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-        Colaboramos con líderes tecnológicos y de medios para ofrecer
-        soluciones integrales a nuestros clientes.
-      </p>
-    </div>
-
-    <!-- Alliances Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
-      {alliances.map((alliance) => (
-        <div
-          class="alliance-card flex items-center justify-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer group"
-        >
-          <span class={`text-center font-semibold ${alliance.color} group-hover:scale-110 transition-transform`}>
-            {alliance.name}
-          </span>
+<section id="alianzas" class="alliances" aria-label="Medios aliados de Plan de Medios">
+  <div class="alliances-inner">
+    <p class="alliances-label">Medios donde transmitimos</p>
+    <div class="alliances-grid">
+      {alliances.map((a) => (
+        <div class="alliance-item">
+          <img
+            src={a.logo}
+            alt={`Logo ${a.name}`}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       ))}
-    </div>
-
-    <!-- CTA -->
-    <div class="mt-16 text-center">
-      <p class="text-gray-600 text-lg">
-        ¿Quieres ser nuestro aliado estratégico?{" "}
-        <button
-          onclick="document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })"
-          class="underline hover:text-black transition-colors font-medium"
-        >
-          Hablemos
-        </button>
-      </p>
     </div>
   </div>
 </section>
 
 <style>
-  .alliance-card {
-    min-height: 100px;
+  .alliances {
+    background: #f8fafc;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 2.5rem 0;
+  }
+
+  .alliances-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .alliances-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #94a3b8;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .alliances-grid {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .alliance-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.65;
+    transition: opacity 0.2s ease;
+    filter: grayscale(0.3);
+  }
+
+  .alliance-item:hover {
+    opacity: 1;
+    filter: grayscale(0);
+  }
+
+  .alliance-item img {
+    height: 36px;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+  }
+
+  @media (max-width: 768px) {
+    .alliances-inner {
+      gap: 1.5rem;
+      padding: 0 1.25rem;
+      flex-direction: column;
+    }
+
+    .alliances-grid {
+      gap: 1.75rem;
+    }
+
+    .alliance-item img {
+      height: 28px;
+    }
   }
 </style>

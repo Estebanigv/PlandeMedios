@@ -1,0 +1,253 @@
+---
+/**
+ * ClientLogos Section — Marquee de clientes por plataforma
+ * Tour Innovación + Tour Graphic
+ */
+
+const innovacionClients = [
+  { name: "Entel Digital",     logo: "/images/clientes/innovacion/entel-digital.png"  },
+  { name: "Entel Ocean",       logo: "/images/clientes/innovacion/entel-ocean.png"    },
+  { name: "Enel",              logo: "/images/clientes/innovacion/enel.png"           },
+  { name: "Garmin",            logo: "/images/clientes/innovacion/garmin.png"         },
+  { name: "GTD",               logo: "/images/clientes/innovacion/gtd.png"            },
+  { name: "Hyundai",           logo: "/images/clientes/innovacion/hyundai.png"        },
+  { name: "Itaú",              logo: "/images/clientes/innovacion/itau.png"           },
+  { name: "AHK",               logo: "/images/clientes/innovacion/ahk.png"            },
+  { name: "Emoac",             logo: "/images/clientes/innovacion/emoac.webp"         },
+  { name: "Banco BICE",        logo: "/images/clientes/innovacion/banco-bice.jpg"     },
+  { name: "Parque Arauco",     logo: "/images/clientes/innovacion/parque-arauco.png"  },
+  { name: "Servipag",          logo: "/images/clientes/innovacion/servipag.png"       },
+  { name: "Coca-Cola Andina",  logo: "/images/clientes/innovacion/coca-cola.png"      },
+  { name: "FenUChile",         logo: "/images/clientes/innovacion/fenuchile.png"      },
+  { name: "Camanchaca",        logo: "/images/clientes/innovacion/camanchaca.png"     },
+  { name: "Sky Airline",       logo: "/images/clientes/innovacion/sky-airline.png"   },
+  { name: "SQM",               logo: "/images/clientes/innovacion/sqm.svg"            },
+  { name: "Arcos Dorados",     logo: "/images/clientes/innovacion/arcos-dorados.png" },
+  { name: "Avon",              logo: "/images/clientes/innovacion/avon.png"           },
+  { name: "Banco Falabella",   logo: "/images/clientes/innovacion/banco-falabella.png"},
+  { name: "Santander",         logo: "/images/clientes/innovacion/santander.png"      },
+  { name: "Caja Los Héroes",   logo: "/images/clientes/innovacion/caja-heroes.png"   },
+  { name: "Dávila",            logo: "/images/clientes/innovacion/davila.png"         },
+  { name: "Decathlon",         logo: "/images/clientes/innovacion/decathlon.png"      },
+  { name: "Corpartes",         logo: "/images/clientes/innovacion/corpartes.png"      },
+  { name: "Mundo",             logo: "/images/clientes/innovacion/mundo.svg"          },
+  { name: "UC Christus",       logo: "/images/clientes/innovacion/ucchristus.png"     },
+  { name: "PlanVital",         logo: "/images/clientes/innovacion/planvital.png"      },
+  { name: "Scotiabank",        logo: "/images/clientes/innovacion/scotiabank.png"     },
+  { name: "Seguros Sura",      logo: "/images/clientes/innovacion/sura.png"           },
+  { name: "TCL",               logo: "/images/clientes/innovacion/tcl.png"            },
+  { name: "Tenpo",             logo: "/images/clientes/innovacion/tenpo.png"          },
+  { name: "Xiaomi",            logo: "/images/clientes/innovacion/xiaomi.png"         },
+];
+
+const graphicClients = [
+  { name: "RutaPass",              logo: "/images/clientes/graphic/rutapass.png"             },
+  { name: "Autopista San Antonio", logo: "/images/clientes/graphic/autopista-san-antonio.png"},
+  { name: "Lacoste",               logo: "/images/clientes/graphic/lacoste.png"              },
+  { name: "Lenovo",                logo: "/images/clientes/graphic/lenovo.png"               },
+  { name: "Fourthane",             logo: "/images/clientes/graphic/fourthane.png"            },
+  { name: "Pionono",               logo: "/images/clientes/graphic/pionono.jpg"              },
+  { name: "Marathon",              logo: "/images/clientes/graphic/marathon.png"             },
+  { name: "Milwaukee",             logo: "/images/clientes/graphic/milwaukee.png"            },
+  { name: "Neohouse",              logo: "/images/clientes/graphic/neohouse.png"             },
+  { name: "Nike",                  logo: "/images/clientes/graphic/nike.png"                 },
+  { name: "Ruta 68",               logo: "/images/clientes/graphic/ruta-68.png"              },
+  { name: "Ruta de la Fruta",      logo: "/images/clientes/graphic/ruta-fruta.png"           },
+  { name: "Sacyr",                 logo: "/images/clientes/graphic/sacyr.png"                },
+  { name: "Serviall",              logo: "/images/clientes/graphic/serviall.png"             },
+  { name: "USS",                   logo: "/images/clientes/graphic/uss.png"                  },
+];
+---
+
+<section id="clientes" class="clients" aria-label="Clientes de Plan de Medios">
+  <div class="clients-header">
+    <span class="clients-label">Clientes que confían en nosotros</span>
+  </div>
+
+  <!-- Tour Innovación -->
+  <div class="track-wrap">
+    <span class="track-tag track-tag--innovacion">Tour Innovación</span>
+    <div class="track-fade">
+      <div class="track" aria-hidden="true">
+        <div class="track-inner">
+          {[...innovacionClients, ...innovacionClients].map((c) => (
+            <div class="logo-slot">
+              <img src={c.logo} alt={c.name} loading="lazy" decoding="async" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tour Graphic -->
+  <div class="track-wrap">
+    <span class="track-tag track-tag--graphic">Tour Graphic</span>
+    <div class="track-fade">
+      <div class="track track--reverse" aria-hidden="true">
+        <div class="track-inner">
+          {[...graphicClients, ...graphicClients].map((c) => (
+            <div class="logo-slot">
+              <img src={c.logo} alt={c.name} loading="lazy" decoding="async" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .clients {
+    background: #f8fafc;
+    padding: 4rem 0 4.5rem;
+    overflow: hidden;
+  }
+
+  /* ── Header ── */
+  .clients-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 0 2rem;
+  }
+
+  .clients-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #94a3b8;
+  }
+
+  /* ── Track wrapper ── */
+  .track-wrap {
+    position: relative;
+    margin-bottom: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .track-wrap:last-child {
+    margin-bottom: 0;
+  }
+
+  .track-tag {
+    flex-shrink: 0;
+    margin-left: 2rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.65rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .track-tag--innovacion {
+    background: rgba(20, 184, 166, 0.1);
+    color: #0d9488;
+  }
+
+  .track-tag--graphic {
+    background: rgba(139, 92, 246, 0.1);
+    color: #7c3aed;
+  }
+
+  /* ── Fade mask ── */
+  .track-fade {
+    flex: 1;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  /* ── Scrolling track ── */
+  .track {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .track-inner {
+    display: flex;
+    gap: 2.5rem;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+
+  .track--reverse .track-inner {
+    animation-direction: reverse;
+    animation-duration: 35s;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* Pause on hover */
+  .track:hover .track-inner {
+    animation-play-state: paused;
+  }
+
+  /* ── Logo slot ── */
+  .logo-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    flex-shrink: 0;
+    opacity: 0.55;
+    transition: opacity 0.2s ease;
+    filter: grayscale(1);
+  }
+
+  .logo-slot:hover {
+    opacity: 1;
+    filter: grayscale(0);
+  }
+
+  .logo-slot img {
+    height: 100%;
+    width: auto;
+    max-width: 110px;
+    object-fit: contain;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .clients {
+      padding: 3rem 0 3.5rem;
+    }
+
+    .track-tag {
+      margin-left: 1rem;
+    }
+
+    .logo-slot {
+      height: 36px;
+    }
+
+    .logo-slot img {
+      max-width: 90px;
+    }
+
+    .track-inner {
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .track-tag {
+      display: none;
+    }
+
+    .track-fade {
+      flex: 1;
+    }
+
+    .logo-slot {
+      height: 30px;
+    }
+  }
+</style>
