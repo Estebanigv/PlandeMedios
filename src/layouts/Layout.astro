@@ -51,6 +51,14 @@ const {
     -->
 
     <title>{title}</title>
+
+    <!-- Anti-flash: apply theme before first paint -->
+    <script is:inline>
+      (function() {
+        var t = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
   </head>
   <body>
     <slot />

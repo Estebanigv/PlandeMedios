@@ -87,6 +87,22 @@ const graphicServices = [
         </p>
       </div>
 
+      <!-- Video Tour Innovación -->
+      <div class="graphic-video-wrapper innovation-video-wrapper">
+        <video
+          class="graphic-video"
+          src="/videos/tour-innovacion.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        ></video>
+        <div class="graphic-video-overlay">
+          <span class="graphic-video-label innovation-label">Tour Innovación</span>
+        </div>
+      </div>
+
       <div class="services-grid">
         {innovacionServices.map((s) => (
           <article class="svc">
@@ -114,6 +130,22 @@ const graphicServices = [
         <p class="services-desc">
           Desde nuestra plataforma Tour Graphic nos consolidamos como especialistas en publicidad digital de grandes formatos. Nos distinguimos por nuestra rapidez, experiencia, flexibilidad y excelencia en cada ejecución.
         </p>
+      </div>
+
+      <!-- Video Tour Graphic -->
+      <div class="graphic-video-wrapper">
+        <video
+          class="graphic-video"
+          src="/videos/tour-graphic.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        ></video>
+        <div class="graphic-video-overlay">
+          <span class="graphic-video-label">Tour Graphic</span>
+        </div>
       </div>
 
       <div class="services-grid services-grid-graphic">
@@ -409,5 +441,54 @@ const graphicServices = [
     .services-title {
       font-size: 1.75rem;
     }
+  }
+
+  /* ── Video Tour Graphic ── */
+  .graphic-video-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    background: #000;
+    aspect-ratio: 16 / 9;
+  }
+
+  .graphic-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .graphic-video-overlay {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    pointer-events: none;
+  }
+
+  .graphic-video-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.875rem;
+    background: rgba(139, 92, 246, 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 100px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: white;
+  }
+
+  .graphic-video-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #e9d5ff;
   }
 </style>
