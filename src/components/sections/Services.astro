@@ -96,7 +96,8 @@ const graphicServices = [
           muted
           loop
           playsinline
-          preload="metadata"
+          webkit-playsinline
+          preload="auto"
         ></video>
         <div class="graphic-video-overlay">
           <span class="graphic-video-label innovation-label">Tour Innovación</span>
@@ -151,7 +152,8 @@ const graphicServices = [
           muted
           loop
           playsinline
-          preload="metadata"
+          webkit-playsinline
+          preload="auto"
         ></video>
         <div class="graphic-video-overlay">
           <span class="graphic-video-label">Tour Graphic</span>
@@ -529,6 +531,27 @@ const graphicServices = [
     background: #e9d5ff;
   }
 
+  /* Badge teal para Tour Innovación */
+  .innovation-label {
+    background: rgba(20, 184, 166, 0.85) !important;
+  }
+  .innovation-label::before {
+    background: #a7f3d0 !important;
+  }
+
+  /* Botones más grandes en mobile */
+  @media (max-width: 768px) {
+    .video-btn {
+      width: 48px;
+      height: 48px;
+    }
+    .video-controls {
+      bottom: 0.875rem;
+      right: 0.875rem;
+      gap: 0.625rem;
+    }
+  }
+
   /* ── Video Controls ── */
   .video-controls {
     position: absolute;
@@ -584,7 +607,7 @@ const graphicServices = [
           }
         }
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.1 });
 
     videos.forEach(v => observer.observe(v));
 

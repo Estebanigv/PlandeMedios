@@ -291,6 +291,13 @@ const bottomRow = teamMembers.slice(5);
       gap: 0.75rem;
     }
 
+    /* Centrar miembro huérfano (5to en fila de 2 cols) */
+    .team-row-5 .member:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      max-width: 200px;
+      margin: 0 auto;
+    }
+
     .member {
       padding: 1.25rem 0.75rem 1rem;
     }
