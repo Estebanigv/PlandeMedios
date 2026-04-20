@@ -120,7 +120,7 @@ export const teamConfig: TeamConfig = {
       name: "Diego Bustamante",
       role: "Analista de Operaciones",
       bio: "Gestión y optimización de operaciones y procesos.",
-      image: "/images/Equipo/Diego Bustamante.png",
+      image: "/images/Equipo/DiegoBustamante.jpeg",
       social: {
         email: "diego.bustamante@plandemedios.cl"
       }

@@ -91,8 +91,8 @@ const graphicServices = [
       <div class="graphic-video-wrapper innovation-video-wrapper">
         <video
           class="graphic-video"
+          id="video-innovacion"
           src="/videos/tour-innovacion.mp4"
-          autoplay
           muted
           loop
           playsinline
@@ -100,6 +100,16 @@ const graphicServices = [
         ></video>
         <div class="graphic-video-overlay">
           <span class="graphic-video-label innovation-label">Tour Innovación</span>
+        </div>
+        <div class="video-controls">
+          <button class="video-btn play-btn" data-video="video-innovacion" aria-label="Reproducir/Pausar">
+            <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+          <button class="video-btn mute-btn" data-video="video-innovacion" aria-label="Silenciar/Activar sonido">
+            <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            <svg class="icon-sound" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
         </div>
       </div>
 
@@ -136,8 +146,8 @@ const graphicServices = [
       <div class="graphic-video-wrapper">
         <video
           class="graphic-video"
+          id="video-graphic"
           src="/videos/tour-graphic.mp4"
-          autoplay
           muted
           loop
           playsinline
@@ -145,6 +155,16 @@ const graphicServices = [
         ></video>
         <div class="graphic-video-overlay">
           <span class="graphic-video-label">Tour Graphic</span>
+        </div>
+        <div class="video-controls">
+          <button class="video-btn play-btn" data-video="video-graphic" aria-label="Reproducir/Pausar">
+            <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+          <button class="video-btn mute-btn" data-video="video-graphic" aria-label="Silenciar/Activar sonido">
+            <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            <svg class="icon-sound" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
         </div>
       </div>
 
@@ -491,4 +511,96 @@ const graphicServices = [
     border-radius: 50%;
     background: #e9d5ff;
   }
+
+  /* ── Video Controls ── */
+  .video-controls {
+    position: absolute;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+  }
+
+  .video-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .video-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.08);
+  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // ── Play/Pause on viewport visibility ──
+    const videos = document.querySelectorAll<HTMLVideoElement>('.graphic-video');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target as HTMLVideoElement;
+        const playBtn = document.querySelector<HTMLButtonElement>(`.play-btn[data-video="${video.id}"]`);
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+          if (playBtn) {
+            playBtn.querySelector('.icon-play')!.setAttribute('style', 'display:none');
+            playBtn.querySelector('.icon-pause')!.setAttribute('style', '');
+          }
+        } else {
+          video.pause();
+          if (playBtn) {
+            playBtn.querySelector('.icon-play')!.setAttribute('style', '');
+            playBtn.querySelector('.icon-pause')!.setAttribute('style', 'display:none');
+          }
+        }
+      });
+    }, { threshold: 0.3 });
+
+    videos.forEach(v => observer.observe(v));
+
+    // ── Play/Pause button ──
+    document.querySelectorAll<HTMLButtonElement>('.play-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const video = document.getElementById(btn.dataset.video!) as HTMLVideoElement;
+        if (!video) return;
+        if (video.paused) {
+          video.play();
+          btn.querySelector('.icon-play')!.setAttribute('style', 'display:none');
+          btn.querySelector('.icon-pause')!.setAttribute('style', '');
+        } else {
+          video.pause();
+          btn.querySelector('.icon-play')!.setAttribute('style', '');
+          btn.querySelector('.icon-pause')!.setAttribute('style', 'display:none');
+        }
+      });
+    });
+
+    // ── Mute/Unmute button ──
+    document.querySelectorAll<HTMLButtonElement>('.mute-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const video = document.getElementById(btn.dataset.video!) as HTMLVideoElement;
+        if (!video) return;
+        video.muted = !video.muted;
+        if (video.muted) {
+          btn.querySelector('.icon-muted')!.setAttribute('style', '');
+          btn.querySelector('.icon-sound')!.setAttribute('style', 'display:none');
+        } else {
+          btn.querySelector('.icon-muted')!.setAttribute('style', 'display:none');
+          btn.querySelector('.icon-sound')!.setAttribute('style', '');
+        }
+      });
+    });
+  });
+</script>
