@@ -1,4 +1,9 @@
 ---
+/**
+ * SEO Component — Plan de Medios
+ * Gestiona todos los meta tags, Open Graph, Twitter Card, hreflang y JSON-LD.
+ * Se renderiza dentro de <head> en Layout.astro.
+ */
 import { siteConfig } from '@/data/site';
 import { socialLinks } from '@/data/social';
 
@@ -48,155 +53,250 @@ const {
   service
 } = Astro.props;
 
-// Use siteConfig for defaults
-const pageTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.name;
+// ── URLs canónicas ──────────────────────────────────────────────────────────
+// pageTitle: el Layout ya pasa el título completo; el SEO sólo lo re-usa en OG/Twitter
+const pageTitle = title;
 const pageDescription = description || siteConfig.description;
-const pageImage = image ? new URL(image, siteConfig.url).toString() : new URL(siteConfig.ogImage, siteConfig.url).toString();
+const pageImage = image
+  ? new URL(image, siteConfig.url).toString()
+  : new URL(siteConfig.ogImage, siteConfig.url).toString();
 const pageUrl = url || new URL(Astro.url.pathname, siteConfig.url).toString();
 
-// Build canonical URL
+// Canonical: preferimos Astro.site (definido en astro.config.mjs) para SSG
 const canonicalURL = Astro.site
-  ? new URL(Astro.url.pathname, Astro.site)
+  ? new URL(Astro.url.pathname, Astro.site).toString()
   : pageUrl;
 
-// Default keywords
+// ── Keywords ────────────────────────────────────────────────────────────────
+// Palabras clave relevantes para una agencia de contenidos audiovisuales chilena
 const defaultKeywords = [
   'plan de medios',
-  'contenido digital',
-  'publicidad digital',
-  'Tour Graphic',
-  'Tour Motor',
+  'agencia de contenidos Chile',
+  'contenido audiovisual Chile',
   'Tour Innovación',
-  'marketing digital',
-  'contenido audiovisual',
-  'innovación digital'
+  'Tour Graphic',
+  'publicidad digital grandes formatos',
+  'CNN Chile contenidos',
+  'T13 publicidad',
+  'Canal 13C',
+  'Mega 2',
+  'Emol TV',
+  'marketing de contenidos Santiago',
+  'producción audiovisual Chile'
 ];
-
 const allKeywords = [...new Set([...defaultKeywords, ...keywords])];
 
-// Generate breadcrumb schema
+// ── Breadcrumb Schema ────────────────────────────────────────────────────────
 const breadcrumbSchema = breadcrumbs.length > 0 ? {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": breadcrumbs.map((item, index) => ({
-    "@type": "ListItem",
-    "position": index + 1,
-    "name": item.name,
-    "item": new URL(item.url, siteConfig.url).toString()
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.name,
+    item: new URL(item.url, siteConfig.url).toString()
   }))
 } : null;
 
-// Generate dynamic schema based on type
-const generateSchema = () => {
-  const baseSchema = {
-    "@context": "https://schema.org"
-  };
+// ── Schemas JSON-LD ──────────────────────────────────────────────────────────
+// Los URLs reales de las redes sociales de Tour Innovación
+const socialUrls = socialLinks.map(link => link.url);
+
+/**
+ * Organization: entidad principal de la agencia.
+ * Se incluye siempre como schema base.
+ */
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteConfig.url}/#organization`,
+  name: siteConfig.name,
+  description: siteConfig.description,
+  url: siteConfig.url,
+  logo: {
+    '@type': 'ImageObject',
+    url: new URL(siteConfig.logo, siteConfig.url).toString(),
+    width: 200,
+    height: 60
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: siteConfig.contact.phone,
+    contactType: 'customer service',
+    email: siteConfig.contact.email,
+    availableLanguage: ['Spanish'],
+    areaServed: 'CL'
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: siteConfig.contact.address.city,
+    addressRegion: 'Región Metropolitana',
+    addressCountry: 'CL'
+  },
+  sameAs: socialUrls
+};
+
+/**
+ * LocalBusiness: refuerza la presencia local en Santiago, Chile.
+ * Aumenta la probabilidad de aparecer en búsquedas geolocalización.
+ */
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${siteConfig.url}/#local`,
+  name: siteConfig.name,
+  description: siteConfig.description,
+  url: siteConfig.url,
+  telephone: siteConfig.contact.phone,
+  email: siteConfig.contact.email,
+  image: new URL(siteConfig.ogImage, siteConfig.url).toString(),
+  logo: new URL(siteConfig.logo, siteConfig.url).toString(),
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Santiago',
+    addressRegion: 'Región Metropolitana de Santiago',
+    addressCountry: 'CL'
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -33.4489,
+    longitude: -70.6693
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00'
+    }
+  ],
+  priceRange: '$$',
+  currenciesAccepted: 'CLP',
+  paymentAccepted: 'Cash, Credit Card, Bank Transfer',
+  areaServed: {
+    '@type': 'Country',
+    name: 'Chile'
+  },
+  sameAs: socialUrls
+};
+
+/**
+ * WebSite: permite que Google entienda el sitio como entidad y habilita
+ * el sitelinks search box si aplica en el futuro.
+ */
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteConfig.url}/#website`,
+  name: siteConfig.name,
+  url: siteConfig.url,
+  description: siteConfig.description,
+  inLanguage: 'es-CL',
+  publisher: {
+    '@id': `${siteConfig.url}/#organization`
+  }
+};
+
+// ── Schema dinámico según el tipo de página ──────────────────────────────────
+const generatePageSchema = () => {
+  const base = { '@context': 'https://schema.org' };
 
   switch (schemaType) {
     case 'Article':
       return {
-        ...baseSchema,
-        "@type": "Article",
-        "headline": title,
-        "description": description,
-        "image": pageImage,
-        "author": {
-          "@type": "Person",
-          "name": article?.author || author || siteConfig.author
+        ...base,
+        '@type': 'Article',
+        headline: title,
+        description: description,
+        image: pageImage,
+        author: {
+          '@type': 'Person',
+          name: article?.author || author || siteConfig.author
         },
-        "publisher": {
-          "@type": "Organization",
-          "name": siteConfig.name,
-          "logo": {
-            "@type": "ImageObject",
-            "url": new URL(siteConfig.logo, siteConfig.url).toString()
-          }
-        },
-        "datePublished": article?.publishedTime || publishedTime,
-        "dateModified": article?.modifiedTime || modifiedTime || article?.publishedTime || publishedTime,
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": pageUrl
-        }
+        publisher: { '@id': `${siteConfig.url}/#organization` },
+        datePublished: article?.publishedTime || publishedTime,
+        dateModified: article?.modifiedTime || modifiedTime || article?.publishedTime || publishedTime,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl }
       };
 
     case 'Service':
       return {
-        ...baseSchema,
-        "@type": "Service",
-        "name": service?.name || title,
-        "description": service?.description || description,
-        "provider": {
-          "@type": "Organization",
-          "name": service?.provider || siteConfig.name,
-          "url": siteConfig.url
-        },
-        "areaServed": {
-          "@type": "Country",
-          "name": "Global"
-        },
-        "serviceType": service?.name || title
+        ...base,
+        '@type': 'Service',
+        name: service?.name || title,
+        description: service?.description || description,
+        provider: { '@id': `${siteConfig.url}/#organization` },
+        areaServed: { '@type': 'Country', name: 'Chile' },
+        serviceType: service?.name || title
       };
 
     case 'WebPage':
       return {
-        ...baseSchema,
-        "@type": "WebPage",
-        "name": title,
-        "description": description,
-        "url": pageUrl,
-        "inLanguage": siteConfig.language,
-        "isPartOf": {
-          "@type": "WebSite",
-          "name": siteConfig.name,
-          "url": siteConfig.url
-        }
+        ...base,
+        '@type': 'WebPage',
+        name: title,
+        description: description,
+        url: pageUrl,
+        inLanguage: 'es-CL',
+        isPartOf: { '@id': `${siteConfig.url}/#website` }
       };
 
     case 'Organization':
     default:
+      // En la página principal usamos WebPage enlazada al Organization
       return {
-        ...baseSchema,
-        "@type": "Organization",
-        "name": siteConfig.name,
-        "description": siteConfig.description,
-        "url": siteConfig.url,
-        "logo": new URL(siteConfig.logo, siteConfig.url).toString(),
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": siteConfig.contact.phone,
-          "contactType": "customer service",
-          "email": siteConfig.contact.email,
-          "availableLanguage": [siteConfig.language]
-        },
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": siteConfig.contact.address.city,
-          "addressCountry": siteConfig.contact.address.country
-        },
-        "sameAs": socialLinks.map(link => link.url)
+        ...base,
+        '@type': 'WebPage',
+        '@id': pageUrl,
+        name: title,
+        description: description,
+        url: pageUrl,
+        inLanguage: 'es-CL',
+        isPartOf: { '@id': `${siteConfig.url}/#website` },
+        about: { '@id': `${siteConfig.url}/#organization` },
+        primaryImageOfPage: {
+          '@type': 'ImageObject',
+          url: pageImage
+        }
       };
   }
 };
 
-const schemaData = generateSchema();
+const pageSchema = generatePageSchema();
 ---
 
-<!-- Primary Meta Tags -->
+<!-- ── Primary Meta Tags ────────────────────────────────────────────────────── -->
 <meta name="title" content={pageTitle} />
 <meta name="description" content={pageDescription} />
+<meta name="keywords" content={allKeywords.join(', ')} />
+<meta name="author" content={author || siteConfig.author} />
 
-<!-- Canonical URL -->
+<!-- robots: permitir indexación completa con max-snippet y max-image-preview -->
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<!-- ── Idioma y región ───────────────────────────────────────────────────────── -->
+<!-- language en el estándar HTTP es "es" o "es-CL", no "Spanish" -->
+<meta http-equiv="content-language" content="es-CL" />
+
+<!-- ── Canonical ────────────────────────────────────────────────────────────── -->
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Open Graph / Facebook -->
+<!-- ── hreflang: sitio en español de Chile (idioma único) ───────────────────── -->
+<!-- Informa a Google que el contenido es para hablantes de español en Chile -->
+<link rel="alternate" hreflang="es-CL" href={canonicalURL} />
+<link rel="alternate" hreflang="x-default" href={siteConfig.url + '/'} />
+
+<!-- ── Open Graph / Facebook ────────────────────────────────────────────────── -->
 <meta property="og:type" content={type} />
 <meta property="og:url" content={pageUrl} />
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={pageDescription} />
 <meta property="og:image" content={pageImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${siteConfig.name} - Agencia de Contenidos Chile`} />
 <meta property="og:site_name" content={siteConfig.name} />
-<meta property="og:locale" content={siteConfig.locale} />
+<meta property="og:locale" content="es_CL" />
 
 {article && (
   <>
@@ -207,28 +307,35 @@ const schemaData = generateSchema();
   </>
 )}
 
-<!-- Twitter -->
+<!-- ── Twitter Card ──────────────────────────────────────────────────────────── -->
+<!-- summary_large_image muestra imagen grande en el tweet — mayor CTR social -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:url" content={pageUrl} />
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={pageDescription} />
 <meta name="twitter:image" content={pageImage} />
+<meta name="twitter:image:alt" content={`${siteConfig.name} - Agencia de Contenidos Chile`} />
 
-<!-- Additional SEO Tags -->
-<meta name="keywords" content={allKeywords.join(', ')} />
-<meta name="author" content={author || siteConfig.author} />
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<meta name="language" content="Spanish" />
-<meta name="generator" content={Astro.generator} />
+<!-- ── Geographic Tags ───────────────────────────────────────────────────────── -->
+<!-- geo.region usa código ISO 3166-2 (CL = Chile) -->
+<meta name="geo.region" content="CL-RM" />
+<meta name="geo.placename" content="Santiago, Región Metropolitana, Chile" />
+<meta name="geo.position" content="-33.4489;-70.6693" />
+<meta name="ICBM" content="-33.4489, -70.6693" />
 
-<!-- Geographic Tags -->
-<meta name="geo.region" content={siteConfig.contact.address.country} />
-<meta name="geo.placename" content={siteConfig.contact.address.city} />
+<!-- ── JSON-LD: Organization (entidad principal) ─────────────────────────────── -->
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema, null, 0)} />
 
-<!-- Schema.org structured data - Organization/Main Entity -->
-<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+<!-- ── JSON-LD: LocalBusiness (refuerza SEO local en Santiago) ───────────────── -->
+<script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema, null, 0)} />
 
-<!-- Schema.org structured data - Breadcrumbs -->
+<!-- ── JSON-LD: WebSite (identidad del sitio) ───────────────────────────────── -->
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema, null, 0)} />
+
+<!-- ── JSON-LD: WebPage / contenido específico de la página ─────────────────── -->
+<script type="application/ld+json" set:html={JSON.stringify(pageSchema, null, 0)} />
+
+<!-- ── JSON-LD: Breadcrumbs (si se pasan) ───────────────────────────────────── -->
 {breadcrumbSchema && (
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema, null, 0)} />
 )}

@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.plandemedios.com/sitemap.xml
+# Sitemap generado por @astrojs/sitemap en el build
+Sitemap: https://www.plandemedios.cl/sitemap-index.xml

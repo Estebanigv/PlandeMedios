@@ -72,7 +72,7 @@ const graphicServices = [
 ];
 ---
 
-<section id="servicios" class="services">
+<section id="servicios" class="services" aria-label="Nuestros servicios: Tour Innovación y Tour Graphic">
   <div class="services-inner">
 
     <!-- ── TOUR INNOVACIÓN ── -->
@@ -89,15 +89,18 @@ const graphicServices = [
 
       <!-- Video Tour Innovación -->
       <div class="graphic-video-wrapper innovation-video-wrapper">
+        <!-- title describe el contenido del video a crawlers y lectores de pantalla -->
         <video
           class="graphic-video"
           id="video-innovacion"
           src="/videos/tour-innovacion.mp4"
+          title="Tour Innovación — Contenido audiovisual en alianza con medios de TV paga y Emol TV"
           muted
           loop
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="metadata"
+          aria-label="Video demostrativo de Tour Innovación"
         ></video>
         <div class="graphic-video-overlay">
           <span class="graphic-video-label innovation-label">Tour Innovación</span>
@@ -145,15 +148,18 @@ const graphicServices = [
 
       <!-- Video Tour Graphic -->
       <div class="graphic-video-wrapper">
+        <!-- title describe el contenido del video a crawlers y lectores de pantalla -->
         <video
           class="graphic-video"
           id="video-graphic"
           src="/videos/tour-graphic.mp4"
+          title="Tour Graphic — Publicidad digital en grandes formatos a nivel nacional"
           muted
           loop
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="metadata"
+          aria-label="Video demostrativo de Tour Graphic"
         ></video>
         <div class="graphic-video-overlay">
           <span class="graphic-video-label">Tour Graphic</span>

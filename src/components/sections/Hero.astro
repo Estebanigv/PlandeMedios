@@ -2,7 +2,8 @@
 import PlatformCardWithImage from '@/components/features/PlatformCardWithImage.astro';
 ---
 
-<section id="inicio" class="hero">
+<!-- h1 único de la página: "Conectamos marcas con audiencias reales" -->
+<section id="inicio" class="hero" aria-label="Inicio — Plan de Medios, agencia de contenidos">
   <!-- Background -->
   <div class="hero-bg">
     <div class="glow glow-1"></div>
@@ -78,6 +79,10 @@ import PlatformCardWithImage from '@/components/features/PlatformCardWithImage.a
 
       <!-- Right: Visual -->
       <div class="hero-visual">
+        <!--
+          priority=true en la primera tarjeta: es LCP candidate (above-the-fold).
+          La segunda recibe lazy loading al estar parcialmente fuera de vista inicial.
+        -->
         <PlatformCardWithImage
           size="large"
           platform="innovation"
@@ -85,7 +90,8 @@ import PlatformCardWithImage from '@/components/features/PlatformCardWithImage.a
           title="Tour Innovación"
           subtitle="Creamos contenidos audiovisuales y editoriales para difundir innovación en alianza con canales de TV Paga y EMOL TV."
           imageSrc="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop&q=80"
-          imageAlt="Innovación y tecnología"
+          imageAlt="Estudio de producción audiovisual — Tour Innovación de Plan de Medios"
+          priority={true}
         />
         <PlatformCardWithImage
           size="large"
@@ -94,7 +100,7 @@ import PlatformCardWithImage from '@/components/features/PlatformCardWithImage.a
           title="Tour Graphic"
           subtitle="Realizamos publicidad digital en grandes formatos. Diseño, distribución e instalación a nivel nacional."
           imageSrc="https://images.unsplash.com/photo-1551818255-e6e10975bc17?w=800&h=600&fit=crop&q=80"
-          imageAlt="Publicidad digital en grandes formatos"
+          imageAlt="Publicidad digital en grandes formatos — Tour Graphic de Plan de Medios"
         />
       </div>
     </div>

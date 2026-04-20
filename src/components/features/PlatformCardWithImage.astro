@@ -11,6 +11,8 @@ interface Props {
   imageAlt: string;
   size?: 'large' | 'medium';
   platform?: 'graphic' | 'motor' | 'innovation';
+  /** fetchpriority="high" en imágenes above-the-fold mejora LCP score */
+  priority?: boolean;
 }
 
 const {
@@ -20,7 +22,8 @@ const {
   imageSrc,
   imageAlt,
   size = 'medium',
-  platform = 'graphic'
+  platform = 'graphic',
+  priority = false
 } = Astro.props;
 ---
 
@@ -30,7 +33,17 @@ const {
   <div class="card-hover-glow"></div>
 
   <div class="platform-card-background">
-    <img src={imageSrc} alt={imageAlt} loading="lazy" />
+    <!--
+      loading="eager" + fetchpriority="high" en imágenes LCP (above-the-fold).
+      loading="lazy" en el resto para no bloquear el hilo principal.
+    -->
+    <img
+      src={imageSrc}
+      alt={imageAlt}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : 'auto'}
+      decoding={priority ? 'sync' : 'async'}
+    />
     <div class={`platform-card-overlay overlay-${platform}`}></div>
   </div>
 

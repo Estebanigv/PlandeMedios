@@ -1,4 +1,8 @@
 ---
+/**
+ * Layout global — Plan de Medios
+ * Centraliza el <head>, meta tags SEO, fuentes y scripts de inicialización.
+ */
 import '../styles/global.css';
 import SEO from '../components/SEO.astro';
 import WhatsAppButton from '../components/ui/WhatsAppButton.astro';
@@ -10,36 +14,67 @@ interface Props {
 
 const {
   title,
-  description = "Plan de Medios - Especialistas en generación de contenido en diferentes formatos. Tour Graphic, Tour Motor y Tour Innovación."
+  description = "Agencia de contenido audiovisual y planificación de medios en Chile. Tour Innovación en CNN Chile, T13, Canal 13C, Mega 2 y Emol TV. Tour Graphic en grandes formatos."
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<!-- lang="es" + region="CL" comunica el idioma a crawlers y lectores de pantalla -->
+<html lang="es-CL">
   <head>
     <meta charset="UTF-8" />
+    <!-- viewport: esencial para mobile-friendliness (Core Web Vitals) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content={Astro.generator} />
 
-    <!-- SEO Component -->
+    <!-- <title> único y descriptivo: "Keyword principal | Marca" (≤60 chars) -->
+    <title>{title}</title>
+
+    <!-- SEO: meta tags, OG, Twitter Card, hreflang y JSON-LD -->
     <SEO title={title} description={description} />
 
-    <!-- DNS Prefetch & Preconnect for external resources -->
+    <!-- ── DNS Prefetch & Preconnect ─────────────────────────────────────────
+         Reducen latencia de conexión a Google Fonts (recurso crítico de render).
+    -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Fonts: DM Serif Display (editorial headings) + Inter (body) -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- ── Fuentes: DM Serif Display + Inter ─────────────────────────────────
+         display=swap: evita FOIT (flash of invisible text), mejora LCP.
+         preload del stylesheet para carga anticipada.
+    -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- Favicons -->
+    <!-- ── LCP Hint ───────────────────────────────────────────────────────────
+         fetchpriority="high" en el isotipo (above-the-fold) sugiere al
+         navegador cargarla con máxima prioridad → mejora LCP score.
+         El isotipo .gif pesa poco y es el primer elemento visual de marca.
+    -->
+    <link
+      rel="preload"
+      as="image"
+      href="/isotipo.gif"
+      fetchpriority="high"
+    />
+
+    <!-- ── Favicons ───────────────────────────────────────────────────────── -->
     <link rel="icon" type="image/gif" href="/isotipo.gif" />
     <link rel="icon" type="image/png" href="/logo-plandemedios.png" />
     <link rel="apple-touch-icon" href="/logo-plandemedios.png" />
 
-    <!-- Google Analytics - Reemplazar con tu ID real -->
+    <!-- ── Google Analytics ───────────────────────────────────────────────────
+         Reemplazar G-XXXXXXXXXX con el ID real del proyecto en GA4.
+         Descomenta cuando esté configurado para no bloquear el deploy.
+    -->
     <!--
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -50,9 +85,10 @@ const {
     </script>
     -->
 
-    <title>{title}</title>
-
-    <!-- Anti-flash: apply theme before first paint (respeta preferencia del sistema) -->
+    <!-- ── Anti-flash: aplica tema antes del primer paint ─────────────────────
+         Respeta la preferencia del sistema operativo (prefers-color-scheme).
+         is:inline ejecuta el script inmediatamente sin defer/async.
+    -->
     <script is:inline>
       (function() {
         var saved = localStorage.getItem('theme');
@@ -64,6 +100,7 @@ const {
     </script>
   </head>
   <body>
+    <!-- El slot incluye: <Header />, <main>...</main>, <Footer /> desde index.astro -->
     <slot />
     <WhatsAppButton />
   </body>

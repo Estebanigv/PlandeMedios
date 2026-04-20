@@ -3,10 +3,11 @@ import { mainNav } from '@/data/navigation';
 import { siteConfig } from '@/data/site';
 ---
 
-<header class="header" id="site-header">
-  <nav class="nav">
+<header class="header" id="site-header" role="banner">
+  <nav class="nav" aria-label="Navegación principal de Plan de Medios">
     <a href="/" class="brand" aria-label={`Ir a ${siteConfig.name}`}>
-      <img src="/isotipo.gif" alt="" class="brand-isotipo" />
+      <!-- alt descriptivo: el isotipo no es puramente decorativo en el contexto del logo de marca -->
+      <img src="/isotipo.gif" alt="Isotipo Plan de Medios" class="brand-isotipo" fetchpriority="high" />
       <span class="brand-text">Plan de Medios</span>
     </a>
 

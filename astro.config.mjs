@@ -5,7 +5,7 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.PUBLIC_SITE_URL || 'https://www.plandemedios.com',
+  site: process.env.PUBLIC_SITE_URL || 'https://www.plandemedios.cl',
 
   // Output mode configuration
   // For static hosting (Netlify, Vercel, etc.) without adapter: use 'static' + Formspree/EmailJS
@@ -51,7 +51,7 @@ export default defineConfig({
       // Generate separate sitemaps for different content types
       serialize(item) {
         // Home page gets highest priority
-        if (item.url === 'https://www.plandemedios.com/') {
+        if (item.url === 'https://www.plandemedios.cl/') {
           item.priority = 1.0;
           item.changefreq = 'daily';
         }

@@ -5,7 +5,7 @@ const topRow = teamMembers.slice(0, 5);
 const bottomRow = teamMembers.slice(5);
 ---
 
-<section id="equipo" class="team">
+<section id="equipo" class="team" aria-label="Equipo profesional de Plan de Medios">
   <div class="team-inner">
     <!-- Header -->
     <div class="section-header">
@@ -22,7 +22,8 @@ const bottomRow = teamMembers.slice(5);
         <article class="member">
           <div class="member-photo">
             {member.image ? (
-              <img src={member.image} alt={member.name} loading="lazy" />
+              <!-- alt incluye nombre y rol para contexto semántico completo -->
+              <img src={member.image} alt={`${member.name} — ${member.role} en Plan de Medios`} loading="lazy" decoding="async" />
             ) : (
               <div class="member-placeholder">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -49,7 +50,8 @@ const bottomRow = teamMembers.slice(5);
         <article class="member">
           <div class="member-photo">
             {member.image ? (
-              <img src={member.image} alt={member.name} loading="lazy" />
+              <!-- alt incluye nombre y rol para contexto semántico completo -->
+              <img src={member.image} alt={`${member.name} — ${member.role} en Plan de Medios`} loading="lazy" decoding="async" />
             ) : (
               <div class="member-placeholder">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">

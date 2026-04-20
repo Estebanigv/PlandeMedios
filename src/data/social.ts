@@ -25,39 +25,30 @@ export const socialConfig: SocialConfig = {
   links: [
     {
       name: "LinkedIn",
-      url: process.env.PUBLIC_SOCIAL_LINKEDIN || "https://www.linkedin.com/company/plandemedios",
+      url: process.env.PUBLIC_SOCIAL_LINKEDIN || "https://www.linkedin.com/company/tour-innovaci%C3%B3n/",
       icon: "linkedin",
-      ariaLabel: "Visitar nuestro perfil de LinkedIn",
-      username: "plandemedios"
-    },
-    {
-      name: "Facebook",
-      url: process.env.PUBLIC_SOCIAL_FACEBOOK || "https://www.facebook.com/plandemedios",
-      icon: "facebook",
-      ariaLabel: "Visitar nuestra página de Facebook",
-      username: "plandemedios"
+      ariaLabel: "Visitar nuestro perfil de LinkedIn de Tour Innovación",
+      username: "tour-innovacion"
     },
     {
       name: "Instagram",
-      url: process.env.PUBLIC_SOCIAL_INSTAGRAM || "https://www.instagram.com/plandemedios",
+      url: process.env.PUBLIC_SOCIAL_INSTAGRAM || "https://www.instagram.com/tour_innovacion",
       icon: "instagram",
-      ariaLabel: "Visitar nuestro perfil de Instagram",
-      username: "@plandemedios"
+      ariaLabel: "Visitar nuestro perfil de Instagram @tour_innovacion",
+      username: "@tour_innovacion"
     },
     {
-      name: "Twitter",
-      url: process.env.PUBLIC_SOCIAL_TWITTER || "https://twitter.com/plandemedios",
-      icon: "twitter",
-      ariaLabel: "Visitar nuestro perfil de Twitter",
-      username: "@plandemedios"
+      name: "TikTok",
+      url: process.env.PUBLIC_SOCIAL_TIKTOK || "https://www.tiktok.com/@tour_innovacion",
+      icon: "tiktok",
+      ariaLabel: "Visitar nuestro perfil de TikTok @tour_innovacion",
+      username: "@tour_innovacion"
     }
   ],
 
   handles: {
-    twitter: "@plandemedios",
-    instagram: "@plandemedios",
-    facebook: "plandemedios",
-    linkedin: "plandemedios"
+    instagram: "@tour_innovacion",
+    linkedin: "tour-innovacion"
   }
 };
 
