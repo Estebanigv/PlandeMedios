@@ -5,10 +5,10 @@
  */
 
 const stats = [
-  { value: 250, suffix: "+", label: "Empresas", desc: "han confiado en nosotros" },
-  { value: 98, suffix: "%", label: "Retención", desc: "clientes vuelven a elegirnos" },
-  { value: 200, suffix: "+", label: "Especiales", desc: "desarrollados con éxito" },
-  { value: 15, suffix: "+", label: "Industrias", desc: "de diversos sectores" }
+  { value: 250, prefix: "+", suffix: "",  label: "Empresas",   desc: "han confiado en nosotros" },
+  { value: 98,  prefix: "+", suffix: "%", label: "Retención",  desc: "clientes vuelven a elegirnos" },
+  { value: 200, prefix: "+", suffix: "",  label: "Especiales", desc: "desarrollados con éxito" },
+  { value: 15,  prefix: "+", suffix: "",  label: "Industrias", desc: "de diversos sectores" }
 ];
 ---
 
@@ -24,8 +24,9 @@ const stats = [
     <!-- Stats Grid -->
     <div class="stats-grid">
       {stats.map((stat) => (
-        <div class="stat-card" data-target={stat.value} data-suffix={stat.suffix}>
+        <div class="stat-card" data-target={stat.value} data-suffix={stat.suffix} data-prefix={stat.prefix}>
           <div class="stat-number-wrap">
+            <span class="stat-prefix">{stat.prefix}</span>
             <span class="stat-number" data-value={stat.value}>0</span>
             <span class="stat-suffix">{stat.suffix}</span>
           </div>
@@ -174,6 +175,7 @@ const stats = [
     letter-spacing: -0.03em;
   }
 
+  .stat-prefix,
   .stat-suffix {
     font-size: 2rem;
     font-weight: 700;

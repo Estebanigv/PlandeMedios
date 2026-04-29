@@ -124,6 +124,15 @@ export const teamConfig: TeamConfig = {
       social: {
         email: "diego.bustamante@plandemedios.cl"
       }
+    },
+    {
+      name: "Katherine Cortés",
+      role: "Realizadora Audiovisual",
+      bio: "Profesional en producción y realización de contenido audiovisual.",
+      image: "/images/Equipo/KatherineCortez.jpeg",
+      social: {
+        email: "katherine.cortes@plandemedios.cl"
+      }
     }
   ],
 
