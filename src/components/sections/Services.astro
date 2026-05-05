@@ -513,8 +513,8 @@ const graphicServices = [
 
   .graphic-video-overlay {
     position: absolute;
-    top: 1.25rem;
-    left: 1.25rem;
+    top: 0.875rem;
+    left: 0.875rem;
     pointer-events: none;
   }
 
@@ -551,6 +551,10 @@ const graphicServices = [
 
   /* Botones más grandes en mobile */
   @media (max-width: 768px) {
+    .graphic-video-wrapper {
+      aspect-ratio: 4 / 3;
+    }
+
     .video-btn {
       width: 48px;
       height: 48px;
@@ -559,6 +563,12 @@ const graphicServices = [
       bottom: 0.875rem;
       right: 0.875rem;
       gap: 0.625rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .graphic-video-wrapper {
+      aspect-ratio: 3 / 2;
     }
   }
 
