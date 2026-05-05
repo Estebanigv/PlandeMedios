@@ -67,7 +67,9 @@ function formatDate(iso: string): string {
 }
 
 function getImg(post: any): string {
-  return post._embedded?.['wp:featuredmedia']?.[0]?.source_url || FALLBACK_IMG;
+  const src = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+  if (!src) return FALLBACK_IMG;
+  return '/img-proxy.php?url=' + encodeURIComponent(src);
 }
 
 function getCat(post: any): string {
@@ -146,7 +148,7 @@ async function loadNews() {
 loadNews();
 </script>
 
-<style>
+<style is:global>
   .noticias {
     position: relative;
     background: #f8fafc;

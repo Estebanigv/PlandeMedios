@@ -93,15 +93,17 @@ const graphicServices = [
         <video
           class="graphic-video"
           id="video-innovacion"
-          src="/videos/tour-innovacion.mp4"
           title="Tour Innovación — Contenido audiovisual en alianza con medios de TV paga y Emol TV"
           muted
           loop
           playsinline
           webkit-playsinline
-          preload="metadata"
+          preload="auto"
           aria-label="Video demostrativo de Tour Innovación"
-        ></video>
+        >
+          <source src="/videos/tour-innovacion.webm" type="video/webm" />
+          <source src="/videos/tour-innovacion.mp4"  type="video/mp4"  />
+        </video>
         <div class="graphic-video-overlay">
           <span class="graphic-video-label innovation-label">Tour Innovación</span>
         </div>
@@ -152,15 +154,17 @@ const graphicServices = [
         <video
           class="graphic-video"
           id="video-graphic"
-          src="/videos/tour-graphic.mp4"
           title="Tour Graphic — Publicidad digital en grandes formatos a nivel nacional"
           muted
           loop
           playsinline
           webkit-playsinline
-          preload="metadata"
+          preload="auto"
           aria-label="Video demostrativo de Tour Graphic"
-        ></video>
+        >
+          <source src="/videos/tour-graphic.webm" type="video/webm" />
+          <source src="/videos/tour-graphic.mp4"  type="video/mp4"  />
+        </video>
         <div class="graphic-video-overlay">
           <span class="graphic-video-label">Tour Graphic</span>
         </div>
@@ -509,7 +513,7 @@ const graphicServices = [
 
   .graphic-video-overlay {
     position: absolute;
-    bottom: 1.25rem;
+    top: 1.25rem;
     left: 1.25rem;
     pointer-events: none;
   }

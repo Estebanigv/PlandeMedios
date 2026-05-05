@@ -39,7 +39,7 @@ export const teamConfig: TeamConfig = {
       name: "José Luis Andraca",
       role: "Gerente General",
       bio: "Líder con amplia trayectoria en medios y comunicación de marca.",
-      image: "/images/Equipo/JoseAndraca.jpeg",
+      image: "/images/Equipo/JoseAndraca.webp",
       social: {
         email: "joseluis.andraca@plandemedios.cl"
       }
@@ -48,7 +48,7 @@ export const teamConfig: TeamConfig = {
       name: "Romina Andraca",
       role: "Administración y Finanzas",
       bio: "Gestión administrativa y financiera de la empresa.",
-      image: "/images/Equipo/RominaAndraca.jpeg",
+      image: "/images/Equipo/RominaAndraca.webp",
       social: {
         email: "romina.andraca@plandemedios.cl"
       }
@@ -57,7 +57,7 @@ export const teamConfig: TeamConfig = {
       name: "Hortencia Fritz",
       role: "Editora General",
       bio: "Especialista en contenido editorial y gestión de proyectos de innovación.",
-      image: "/images/Equipo/HortenciaFritz.jpeg",
+      image: "/images/Equipo/HortenciaFritz.webp",
       social: {
         email: "hortencia.fritz@plandemedios.cl"
       }
@@ -66,7 +66,7 @@ export const teamConfig: TeamConfig = {
       name: "César Olate",
       role: "Realizador Audiovisual",
       bio: "Profesional en producción y realización de contenido audiovisual.",
-      image: "/images/Equipo/CesarOlate.png",
+      image: "/images/Equipo/CesarOlate.webp",
       social: {
         email: "cesar.olate@plandemedios.cl"
       }
@@ -75,7 +75,7 @@ export const teamConfig: TeamConfig = {
       name: "Jaime San Martín",
       role: "Realizador Audiovisual",
       bio: "Especialista en producción audiovisual y dirección de contenido.",
-      image: "/images/Equipo/Jaime San Martín.jpeg",
+      image: "/images/Equipo/Jaime San Martín.webp",
       social: {
         email: "jaime.sanmartin@plandemedios.cl"
       }
@@ -84,7 +84,7 @@ export const teamConfig: TeamConfig = {
       name: "Viviana Carrillo",
       role: "Diseño y Redes Sociales",
       bio: "Especialista en diseño visual y gestión de redes sociales.",
-      image: "/images/Equipo/VivianaCarrillo.png",
+      image: "/images/Equipo/VivianaCarrillo.webp",
       social: {
         email: "viviana.carrillo@plandemedios.cl"
       }
@@ -93,7 +93,7 @@ export const teamConfig: TeamConfig = {
       name: "Sandra Andraca",
       role: "Marketing de Contenidos",
       bio: "Creación y gestión de estrategias de contenido para marcas.",
-      image: "/images/Equipo/SandraAndraca.png",
+      image: "/images/Equipo/SandraAndraca.webp",
       social: {
         email: "Sandra.andraca@plandemedios.cl"
       }
@@ -102,7 +102,7 @@ export const teamConfig: TeamConfig = {
       name: "Verónica Gómez",
       role: "Marketing de Contenidos",
       bio: "Especialista en marketing de contenidos y estrategia digital.",
-      image: "/images/Equipo/VeronicaGomez.jpeg",
+      image: "/images/Equipo/VeronicaGomez.webp",
       social: {
         email: "veronica.gomez@plandemedios.cl"
       }
@@ -111,7 +111,7 @@ export const teamConfig: TeamConfig = {
       name: "Jessica Rivas",
       role: "Área Gráfica Digital",
       bio: "Diseñadora especializada en formatos digitales y grandes formatos.",
-      image: "/images/Equipo/Jessica Rivas.jpeg",
+      image: "/images/Equipo/Jessica Rivas.webp",
       social: {
         email: "jessica.rivas@plandemedios.cl"
       }
@@ -120,7 +120,7 @@ export const teamConfig: TeamConfig = {
       name: "Diego Bustamante",
       role: "Analista de Operaciones",
       bio: "Gestión y optimización de operaciones y procesos.",
-      image: "/images/Equipo/DiegoBustamante.jpeg",
+      image: "/images/Equipo/DiegoBustamante.webp",
       social: {
         email: "diego.bustamante@plandemedios.cl"
       }
@@ -129,7 +129,7 @@ export const teamConfig: TeamConfig = {
       name: "Katherine Cortés",
       role: "Realizadora Audiovisual",
       bio: "Profesional en producción y realización de contenido audiovisual.",
-      image: "/images/Equipo/KatherineCortez.jpeg",
+      image: "/images/Equipo/KatherineCortez.webp",
       social: {
         email: "katherine.cortes@plandemedios.cl"
       }
