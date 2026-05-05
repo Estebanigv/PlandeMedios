@@ -1,92 +1,150 @@
 ---
-import { getCollection } from 'astro:content';
-
-const allPosts = await getCollection('blog');
-const posts = allPosts
-  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-  .slice(0, 5);
-
-const featured = posts[0];
-const grid = posts.slice(1, 5);
-
-const formatDate = (date: Date) =>
-  date.toLocaleDateString('es-CL', { day: 'numeric', month: 'short' });
-
-const fallbackImg = 'https://images.unsplash.com/photo-1504711434969-e33886168d8c?w=600&h=400&fit=crop&q=80';
-
-const catColors: Record<string, string> = {
-  'video': '#f43f5e',
-  'audio': '#8b5cf6',
-  'contenido': '#f59e0b',
-  'marketing digital': '#14b8a6',
-  'e-commerce': '#3b82f6',
-  'innovación': '#10b981',
-  'roi': '#f97316',
-  'branding': '#ec4899',
-  'estrategia': '#6366f1',
-};
-
-const getCatColor = (cat: string) => catColors[cat.toLowerCase()] || '#14b8a6';
+// Noticias en vivo desde tourinnovacion.cl (WordPress REST API)
 ---
 
 <section id="noticias" class="noticias">
   <div class="noticias-inner">
-    <!-- Header -->
+
     <div class="noticias-header">
       <div>
         <span class="decorator">Noticias</span>
         <h2 class="noticias-title">Últimas publicaciones</h2>
       </div>
-      <a href="/blog" class="view-all">
+      <a href="https://www.tourinnovacion.cl" target="_blank" rel="noopener noreferrer" class="view-all">
         Ver todas
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
 
-    {posts.length > 0 && (
-      <div class="news-grid">
-        <!-- Featured -->
-        <a href={`/blog/${featured.slug}`} class="featured">
-          <div class="featured-img">
-            <img src={featured.data.image || fallbackImg} alt={featured.data.title} loading="lazy" />
-            <div class="img-overlay"></div>
-            <span class="cat-badge" style={`background: ${getCatColor(featured.data.category)};`}>{featured.data.category}</span>
-          </div>
-          <div class="featured-body">
-            <h3 class="featured-title">{featured.data.title}</h3>
-            <p class="featured-excerpt">{featured.data.description}</p>
-            <div class="card-footer">
-              <div class="meta">
-                <time>{formatDate(featured.data.publishDate)}</time>
-                {featured.data.readTime && <span class="dot"></span>}
-                {featured.data.readTime && <span>{featured.data.readTime}</span>}
-              </div>
-              <span class="read-link">Leer artículo →</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Grid cards -->
-        {grid.map((post) => (
-          <a href={`/blog/${post.slug}`} class="post-card">
-            <div class="post-img">
-              <img src={post.data.image || fallbackImg} alt={post.data.title} loading="lazy" />
-              <div class="img-overlay"></div>
-              <span class="cat-badge cat-badge-sm" style={`background: ${getCatColor(post.data.category)};`}>{post.data.category}</span>
-            </div>
-            <div class="post-body">
-              <h4 class="post-title">{post.data.title}</h4>
-              <div class="card-footer">
-                <time>{formatDate(post.data.publishDate)}</time>
-                <span class="read-link">→</span>
-              </div>
-            </div>
-          </a>
-        ))}
+    <!-- Skeleton mientras carga -->
+    <div id="news-skeleton" class="skeleton-wrap">
+      <div class="sk-featured-row">
+        <div class="sk-card-lg"></div>
+        <div class="sk-card-lg"></div>
+        <div class="sk-card-lg"></div>
       </div>
-    )}
+      <div class="sk-list">
+        <div class="sk-list-item"></div>
+        <div class="sk-list-item"></div>
+        <div class="sk-list-item"></div>
+        <div class="sk-list-item"></div>
+      </div>
+    </div>
+
+    <!-- 3 destacadas -->
+    <div id="news-featured" class="news-featured" hidden></div>
+
+    <!-- 4 en lista -->
+    <div id="news-list" class="news-list" hidden>
+      <h3 class="list-title">
+        <span class="dot-red"></span>Últimas noticias
+      </h3>
+      <div id="news-list-items"></div>
+    </div>
+
+    <!-- Error state -->
+    <div id="news-error" class="news-error" hidden>
+      <p>No se pudieron cargar las noticias. <a href="https://www.tourinnovacion.cl" target="_blank" rel="noopener">Visitar Tour Innovación →</a></p>
+    </div>
+
   </div>
 </section>
+
+<script>
+const WP_API = 'https://www.tourinnovacion.cl/wp-json/wp/v2/posts?per_page=7&_embed&orderby=date&order=desc';
+const FALLBACK_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168d8c?w=800&h=500&fit=crop&q=80';
+
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]+>/g, '').trim();
+}
+
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('es-CL', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+
+function getImg(post: any): string {
+  return post._embedded?.['wp:featuredmedia']?.[0]?.source_url || FALLBACK_IMG;
+}
+
+function getCat(post: any): string {
+  return post._embedded?.['wp:term']?.[0]?.[0]?.name || '';
+}
+
+function renderFeatured(posts: any[]): string {
+  return posts.map((p) => {
+    const img = getImg(p);
+    const cat = getCat(p);
+    const title = stripHtml(p.title.rendered);
+    const date = formatDate(p.date);
+    return `
+      <a href="${p.link}" target="_blank" rel="noopener noreferrer" class="feat-card">
+        <div class="feat-img-wrap">
+          <img src="${img}" alt="${title}" loading="lazy" />
+          <div class="feat-overlay"></div>
+          ${cat ? `<span class="feat-cat">${cat}</span>` : ''}
+        </div>
+        <div class="feat-body">
+          <h3 class="feat-title">${title}</h3>
+          <time class="feat-date">${date}</time>
+        </div>
+      </a>`;
+  }).join('');
+}
+
+function renderList(posts: any[]): string {
+  return posts.map((p) => {
+    const img = getImg(p);
+    const cat = getCat(p);
+    const title = stripHtml(p.title.rendered);
+    const date = formatDate(p.date);
+    return `
+      <a href="${p.link}" target="_blank" rel="noopener noreferrer" class="list-item">
+        <div class="list-thumb">
+          <img src="${img}" alt="${title}" loading="lazy" />
+        </div>
+        <div class="list-content">
+          ${cat ? `<span class="list-cat">${cat}</span>` : ''}
+          <p class="list-title-text">${title}</p>
+          <time class="list-date">${date}</time>
+        </div>
+      </a>`;
+  }).join('');
+}
+
+async function loadNews() {
+  const skeleton  = document.getElementById('news-skeleton')!;
+  const featEl    = document.getElementById('news-featured')!;
+  const listEl    = document.getElementById('news-list')!;
+  const listItems = document.getElementById('news-list-items')!;
+  const errorEl   = document.getElementById('news-error')!;
+
+  try {
+    const res = await fetch(WP_API);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const posts: any[] = await res.json();
+
+    const featured = posts.slice(0, 3);
+    const list     = posts.slice(3, 7);
+
+    featEl.innerHTML    = renderFeatured(featured);
+    listItems.innerHTML = renderList(list);
+
+    skeleton.remove();
+    featEl.hidden = false;
+    if (list.length > 0) listEl.hidden = false;
+  } catch (e) {
+    console.error('Tour Innovación API error:', e);
+    skeleton.remove();
+    errorEl.hidden = false;
+  }
+}
+
+loadNews();
+</script>
 
 <style>
   .noticias {
@@ -169,224 +227,258 @@ const getCatColor = (cat: string) => catColors[cat.toLowerCase()] || '#14b8a6';
     transform: translateX(3px);
   }
 
-  /* ── Grid ── */
-  .news-grid {
+  /* ── Skeleton ── */
+  @keyframes shimmer {
+    0%   { background-position: -600px 0; }
+    100% { background-position:  600px 0; }
+  }
+
+  .sk-featured-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto auto;
     gap: 1.25rem;
+    margin-bottom: 2rem;
   }
 
-  /* ── Shared ── */
-  .img-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.2), transparent 60%);
-    pointer-events: none;
+  .sk-card-lg {
+    height: 320px;
+    border-radius: 16px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 600px 100%;
+    animation: shimmer 1.4s infinite;
   }
 
-  .cat-badge {
-    position: absolute;
-    top: 0.875rem;
-    left: 0.875rem;
-    font-size: 0.625rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: white;
-    padding: 0.25rem 0.625rem;
-    border-radius: 6px;
-    z-index: 1;
-  }
-
-  .cat-badge-sm {
-    top: 0.625rem;
-    left: 0.625rem;
-    font-size: 0.5625rem;
-    padding: 0.1875rem 0.5rem;
-  }
-
-  .card-footer {
+  .sk-list {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 0.75rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  .meta {
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-    font-size: 0.6875rem;
-    color: #94a3b8;
+  .sk-list-item {
+    height: 80px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 600px 100%;
+    animation: shimmer 1.4s infinite;
   }
 
-  .dot {
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: #cbd5e1;
+  /* ── 3 Featured cards ── */
+  .news-featured {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
   }
 
-  time {
-    font-size: 0.6875rem;
-    color: #94a3b8;
-  }
-
-  .read-link {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #94a3b8;
-    transition: color 0.25s ease;
-  }
-
-  /* ── Featured ── */
-  .featured {
-    grid-row: 1 / 3;
-    grid-column: 1 / 2;
+  .feat-card {
     display: flex;
     flex-direction: column;
     background: white;
     border-radius: 16px;
     overflow: hidden;
     text-decoration: none;
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
   }
 
-  .featured:hover {
+  .feat-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
     border-color: rgba(20, 184, 166, 0.15);
   }
 
-  .featured:hover .featured-img img {
-    transform: scale(1.04);
-  }
-
-  .featured:hover .read-link {
-    color: #14b8a6;
-  }
-
-  .featured-img {
+  .feat-img-wrap {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 10;
   }
 
-  .featured-img img {
+  .feat-img-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
   }
 
-  .featured-body {
-    padding: 1.5rem 1.75rem;
+  .feat-card:hover .feat-img-wrap img {
+    transform: scale(1.04);
+  }
+
+  .feat-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.25), transparent 60%);
+    pointer-events: none;
+  }
+
+  .feat-cat {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: white;
+    background: #14b8a6;
+    padding: 0.2rem 0.55rem;
+    border-radius: 5px;
+    z-index: 1;
+  }
+
+  .feat-body {
+    padding: 1.1rem 1.25rem 1.25rem;
     display: flex;
     flex-direction: column;
+    gap: 0.4rem;
     flex: 1;
   }
 
-  .featured-title {
+  .feat-title {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 400;
+    font-size: 0.9375rem;
+    font-weight: 500;
     color: #111827;
-    line-height: 1.2;
-    margin: 0 0 0.75rem;
-  }
-
-  .featured-excerpt {
-    font-size: 0.8125rem;
-    line-height: 1.7;
-    color: #64748b;
-    margin: 0 0 auto;
-    padding-bottom: 1rem;
+    line-height: 1.3;
+    margin: 0;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  /* ── Post Card ── */
-  .post-card {
+  .feat-date {
+    font-size: 0.6875rem;
+    color: #94a3b8;
+    margin-top: auto;
+  }
+
+  /* ── 4 List items ── */
+  .list-title {
     display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 14px;
-    overflow: hidden;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #111827;
+    margin: 0 0 1.25rem;
+  }
+
+  .dot-red {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+    flex-shrink: 0;
+    animation: pulse-red 2s infinite;
+  }
+
+  @keyframes pulse-red {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+
+  .list-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     text-decoration: none;
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
   }
 
-  .post-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-    border-color: rgba(20, 184, 166, 0.12);
+  .list-item:last-child {
+    border-bottom: none;
   }
 
-  .post-card:hover .post-img img {
-    transform: scale(1.04);
+  .list-item:hover .list-thumb img {
+    transform: scale(1.05);
   }
 
-  .post-card:hover .read-link {
+  .list-item:hover .list-title-text {
     color: #14b8a6;
   }
 
-  .post-img {
-    position: relative;
+  .list-thumb {
+    width: 96px;
+    height: 68px;
+    border-radius: 10px;
     overflow: hidden;
-    aspect-ratio: 16 / 9;
+    flex-shrink: 0;
   }
 
-  .post-img img {
+  .list-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.4s ease;
   }
 
-  .post-body {
-    padding: 1rem 1.25rem;
+  .list-content {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    gap: 0.25rem;
   }
 
-  .post-title {
-    font-family: var(--font-body);
+  .list-cat {
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #14b8a6;
+  }
+
+  .list-title-text {
     font-size: 0.875rem;
     font-weight: 600;
     color: #111827;
     line-height: 1.35;
-    margin: 0 0 auto;
-    padding-bottom: 0.75rem;
+    margin: 0;
+    transition: color 0.2s ease;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
+  .list-date {
+    font-size: 0.6875rem;
+    color: #94a3b8;
+  }
+
+  /* ── Error ── */
+  .news-error {
+    text-align: center;
+    padding: 3rem;
+    color: #64748b;
+    font-size: 0.875rem;
+  }
+
+  .news-error a {
+    color: #14b8a6;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
   /* ── Responsive ── */
   @media (max-width: 1024px) {
-    .news-grid {
+    .news-featured,
+    .sk-featured-row {
       grid-template-columns: 1fr 1fr;
     }
 
-    .featured {
-      grid-column: 1 / 3;
-      grid-row: auto;
+    .feat-card:nth-child(3) {
+      display: none;
     }
 
-    .featured-img {
-      aspect-ratio: 21 / 9;
-    }
-
-    .noticias-title {
-      font-size: 2.5rem;
+    .sk-card-lg:nth-child(3) {
+      display: none;
     }
   }
 
@@ -408,16 +500,24 @@ const getCatColor = (cat: string) => catColors[cat.toLowerCase()] || '#14b8a6';
       font-size: 2.125rem;
     }
 
-    .news-grid {
+    .news-featured,
+    .sk-featured-row {
       grid-template-columns: 1fr;
     }
 
-    .featured {
-      grid-column: 1;
+    .feat-card:nth-child(2),
+    .feat-card:nth-child(3) {
+      display: none;
     }
 
-    .featured-title {
-      font-size: 1.375rem;
+    .sk-card-lg:nth-child(2),
+    .sk-card-lg:nth-child(3) {
+      display: none;
+    }
+
+    .list-thumb {
+      width: 80px;
+      height: 58px;
     }
   }
 
