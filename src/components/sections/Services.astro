@@ -87,36 +87,20 @@ const graphicServices = [
         </p>
       </div>
 
-      <!-- Video Tour Innovación -->
+      <!-- Video Tour Innovación — YouTube embed -->
       <div class="graphic-video-wrapper innovation-video-wrapper">
-        <!-- title describe el contenido del video a crawlers y lectores de pantalla -->
-        <video
-          class="graphic-video"
-          id="video-innovacion"
-          title="Tour Innovación — Contenido audiovisual en alianza con medios de TV paga y Emol TV"
-          muted
-          loop
-          playsinline
-          webkit-playsinline
-          preload="auto"
-          aria-label="Video demostrativo de Tour Innovación"
-        >
-          <source src="/videos/tour-innovacion.webm" type="video/webm" />
-          <source src="/videos/tour-innovacion.mp4"  type="video/mp4"  />
-        </video>
         <div class="graphic-video-overlay">
           <span class="graphic-video-label innovation-label">Tour Innovación</span>
         </div>
-        <div class="video-controls">
-          <button class="video-btn play-btn" data-video="video-innovacion" aria-label="Reproducir/Pausar">
-            <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-          </button>
-          <button class="video-btn mute-btn" data-video="video-innovacion" aria-label="Silenciar/Activar sonido">
-            <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
-            <svg class="icon-sound" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-          </button>
-        </div>
+        <iframe
+          id="yt-innovacion"
+          class="yt-iframe"
+          src="https://www.youtube-nocookie.com/embed/NU7DhL-29EQ?enablejsapi=1&rel=0&modestbranding=1&playsinline=1&mute=1&loop=1&playlist=NU7DhL-29EQ"
+          title="Tour Innovación — Plan de Medios"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
       </div>
 
       <div class="services-grid">
@@ -541,6 +525,16 @@ const graphicServices = [
     background: #e9d5ff;
   }
 
+  /* YouTube iframe */
+  .yt-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
   /* Badge teal para Tour Innovación */
   .innovation-label {
     background: rgba(20, 184, 166, 0.85) !important;
@@ -606,62 +600,88 @@ const graphicServices = [
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // ── Play/Pause on viewport visibility ──
-    const videos = document.querySelectorAll<HTMLVideoElement>('.graphic-video');
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const video = entry.target as HTMLVideoElement;
-        const playBtn = document.querySelector<HTMLButtonElement>(`.play-btn[data-video="${video.id}"]`);
-        if (entry.isIntersecting) {
-          video.play().catch(() => {});
-          if (playBtn) {
-            playBtn.querySelector('.icon-play')!.setAttribute('style', 'display:none');
-            playBtn.querySelector('.icon-pause')!.setAttribute('style', '');
+    // ── YouTube IFrame API ──
+    let ytPlayer: any = null;
+
+    (window as any).onYouTubeIframeAPIReady = () => {
+      ytPlayer = new (window as any).YT.Player('yt-innovacion', {
+        events: {
+          onReady: (e: any) => e.target.mute(),
+        }
+      });
+    };
+
+    // Cargar API de YouTube solo cuando el iframe esté en viewport
+    const ytIframe = document.getElementById('yt-innovacion');
+    if (ytIframe) {
+      const ytObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (!(window as any).YT) {
+              const tag = document.createElement('script');
+              tag.src = 'https://www.youtube.com/iframe_api';
+              document.head.appendChild(tag);
+            } else if (ytPlayer) {
+              ytPlayer.playVideo();
+            }
+          } else {
+            if (ytPlayer) ytPlayer.pauseVideo();
           }
-        } else {
-          video.pause();
-          if (playBtn) {
-            playBtn.querySelector('.icon-play')!.setAttribute('style', '');
-            playBtn.querySelector('.icon-pause')!.setAttribute('style', 'display:none');
+        });
+      }, { threshold: 0.2 });
+      ytObserver.observe(ytIframe);
+    }
+
+    // ── Video Tour Graphic (local) — Play/Pause en viewport ──
+    const graphicVideo = document.getElementById('video-graphic') as HTMLVideoElement | null;
+    if (graphicVideo) {
+      const vObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const playBtn = document.querySelector<HTMLButtonElement>('.play-btn[data-video="video-graphic"]');
+          if (entry.isIntersecting) {
+            graphicVideo.play().catch(() => {});
+            if (playBtn) {
+              playBtn.querySelector('.icon-play')!.setAttribute('style', 'display:none');
+              playBtn.querySelector('.icon-pause')!.setAttribute('style', '');
+            }
+          } else {
+            graphicVideo.pause();
+            if (playBtn) {
+              playBtn.querySelector('.icon-play')!.setAttribute('style', '');
+              playBtn.querySelector('.icon-pause')!.setAttribute('style', 'display:none');
+            }
           }
-        }
-      });
-    }, { threshold: 0.1 });
+        });
+      }, { threshold: 0.1 });
+      vObserver.observe(graphicVideo);
 
-    videos.forEach(v => observer.observe(v));
-
-    // ── Play/Pause button ──
-    document.querySelectorAll<HTMLButtonElement>('.play-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const video = document.getElementById(btn.dataset.video!) as HTMLVideoElement;
-        if (!video) return;
-        if (video.paused) {
-          video.play();
-          btn.querySelector('.icon-play')!.setAttribute('style', 'display:none');
-          btn.querySelector('.icon-pause')!.setAttribute('style', '');
+      // Play/Pause button
+      const playBtn = document.querySelector<HTMLButtonElement>('.play-btn[data-video="video-graphic"]');
+      playBtn?.addEventListener('click', () => {
+        if (graphicVideo.paused) {
+          graphicVideo.play();
+          playBtn.querySelector('.icon-play')!.setAttribute('style', 'display:none');
+          playBtn.querySelector('.icon-pause')!.setAttribute('style', '');
         } else {
-          video.pause();
-          btn.querySelector('.icon-play')!.setAttribute('style', '');
-          btn.querySelector('.icon-pause')!.setAttribute('style', 'display:none');
+          graphicVideo.pause();
+          playBtn.querySelector('.icon-play')!.setAttribute('style', '');
+          playBtn.querySelector('.icon-pause')!.setAttribute('style', 'display:none');
         }
       });
-    });
 
-    // ── Mute/Unmute button ──
-    document.querySelectorAll<HTMLButtonElement>('.mute-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const video = document.getElementById(btn.dataset.video!) as HTMLVideoElement;
-        if (!video) return;
-        video.muted = !video.muted;
-        if (video.muted) {
-          btn.querySelector('.icon-muted')!.setAttribute('style', '');
-          btn.querySelector('.icon-sound')!.setAttribute('style', 'display:none');
+      // Mute/Unmute button
+      const muteBtn = document.querySelector<HTMLButtonElement>('.mute-btn[data-video="video-graphic"]');
+      muteBtn?.addEventListener('click', () => {
+        graphicVideo.muted = !graphicVideo.muted;
+        if (graphicVideo.muted) {
+          muteBtn.querySelector('.icon-muted')!.setAttribute('style', '');
+          muteBtn.querySelector('.icon-sound')!.setAttribute('style', 'display:none');
         } else {
-          btn.querySelector('.icon-muted')!.setAttribute('style', 'display:none');
-          btn.querySelector('.icon-sound')!.setAttribute('style', '');
+          muteBtn.querySelector('.icon-muted')!.setAttribute('style', 'display:none');
+          muteBtn.querySelector('.icon-sound')!.setAttribute('style', '');
         }
       });
-    });
+    }
   });
 </script>
